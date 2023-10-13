@@ -1,0 +1,7 @@
+#dataset
+/dataset/*
+!/dataset/.gitkeep
+
+#dataset stuff
+/src/model/saved/*
+!/src/model/saved/.gitkeep
