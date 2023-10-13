@@ -5,8 +5,19 @@ class Loader:
     def __init__(self, *args):
         self.dir_paths = args
         self.resize = (640,480)
+        self.final_output = self.process()
 
-    def do(self):
+    def merge_and_randomize(self,input):
+        output = []
+
+        for y,dirs in enumerate(input):
+            for j,img in enumerate(dirs):
+                #print(f"{j}. x || {y}. y")
+                output.append([img,y])
+                
+        return output
+
+    def process(self):
         output = []
         for i,folder_path in enumerate(self.dir_paths):
             output.append([])
@@ -21,17 +32,27 @@ class Loader:
                         output[i].append(img)
 
                 if output[i]:
-                    print(f"From dir {i} loaded {len(output[i])} images.")
+                    #print(f"From dir {i} loaded {len(output[i])} images.")
+                    print()
                 else:
                     print("No images found in the directory.")
+
             else:
                 print("Invalid directory path.")
 
+        output = self.merge_and_randomize(output)
+        #print(f"output len: {len(output)}")
         #print(output)
+        return output
+    
+    def get(self,index):
+        return self.final_output[index]
+
+    
 
 
 
-ld = Loader("dataset/lomy/stepnylom_jpg","dataset/lomy/tvarnylom_jpg")
-
-ld.do()
+if __name__ == "__main__":
+    ld = Loader("dataset/lomy/stepnylom_jpg","dataset/lomy/tvarnylom_jpg")
+    print(ld.get(6))
 
