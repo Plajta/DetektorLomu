@@ -5,3 +5,5 @@
 #dataset stuff
 /src/model/saved/*
 !/src/model/saved/.gitkeep
+
+env
