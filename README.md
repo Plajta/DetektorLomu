@@ -1,5 +1,5 @@
 # CVUTHack
 Amogus
-TODO:
+## TODO:
 
-[ ] choose theme
+- [ ] choose theme
