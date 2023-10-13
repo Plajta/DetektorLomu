@@ -1,5 +1,6 @@
 import os
 import cv2
+import random
 
 class Loader:
     def __init__(self, *args):
@@ -25,7 +26,11 @@ class Loader:
                 for filename in os.listdir(folder_path):
                     if filename.endswith(('.jpg', '.jpeg', '.png')):
                         img = cv2.imread(os.path.join(folder_path, filename))
+                        img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 
+                        height, width = img.shape[:2]
+                        crop_height = int(height * (1 - 0.3))
+                        img = img[:crop_height, :]
                         # ořezávání
 
                         img = cv2.resize(img, self.resize)
@@ -45,6 +50,9 @@ class Loader:
         #print(output)
         return output
     
+    def randomize(self):
+        self.final_output = random.shuffle(self.final_output)
+    
     def get(self,index):
         return self.final_output[index]
 
@@ -55,4 +63,11 @@ class Loader:
 if __name__ == "__main__":
     ld = Loader("dataset/lomy/stepnylom_jpg","dataset/lomy/tvarnylom_jpg")
     print(ld.get(6))
+
+    cv2.imshow('Grayscale Image', ld.get(2)[0])
+
+    # Wait for a key event and close the windows
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()
+
 
