@@ -34,9 +34,9 @@ class Loader:
                         left_corner = img[round(len(img)*0.88):round(len(img)),0:round(len(img[0])*0.15)]
                         right_corner = img[round(len(img)*0.88):round(len(img)),round(len(img[0])*0.85):round(len(img[0]))]
                         if (np.sum((left_corner<20)) >= 500 or np.sum((right_corner<20)) >= 500): img = img[0:round(len(img)*0.88),:]
-                        for num, line in enumerate(img):
-                            if sum(line>=200)>50 and num>len(img)*0.8:
-                                img = img[0:num-30]
+                        for num, line in enumerate(img[round(len(img)*0.8):len(img)]):
+                            if sum(line>=200)>50:
+                                img = img[0:round(len(img)*0.8)+num-30]
                                 break
                         # ořezávání
 
@@ -60,7 +60,6 @@ class Loader:
         random.shuffle(self.final_output)
     
     def get(self,index,which_dataset=0):
-
         match which_dataset:
             case 0:
                 return self.final_output[index]
@@ -68,7 +67,15 @@ class Loader:
                 return self.training[index]
             case 2:
                 return self.testing[index]
-        
+
+    def get_array(self,which_dataset=0):
+        match which_dataset:
+            case 0:
+                return self.final_output
+            case 1:
+                return self.training
+            case 2:
+                return self.testing        
     
     def get_length(self,which_dataset=0):
         match which_dataset:

@@ -8,3 +8,5 @@
 
 env
 .idea
+
+src/model/__pycache__

@@ -10,6 +10,7 @@ from sklearn.model_selection import GridSearchCV
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
 from sklearn.metrics import classification_report
+import pickle
 
 
 Categories = ['stepnylom_jpg', 'tvarnylom_jpg']
@@ -24,16 +25,11 @@ for i in Categories:
     bruh = 0
 
     for img in os.listdir(path):
-        bruh += 1
-        if bruh <= 150:
-            continue
         img_array = imread(os.path.join(path, img))
         img_resized = resize(img_array, (150, 150, 1))
         img_resized = img_resized / 255
         flat_data_arr.append(img_resized.flatten())
         target_arr.append(Categories.index(i))
-        if bruh >= 250:
-            break
 
     print(f'loaded category: {i} successfully.')
 
@@ -77,4 +73,9 @@ accuracy = accuracy_score(y_pred, y_test)
 
 # Print the accuracy of the model
 print(f"The model is {accuracy*100}% accurate")
+
+
+print(classification_report(y_test, y_pred, target_names=['stepnylom_jpg', 'tvarnylom_jpg']))
+
+pickle.dump(model, open("SusikBusikAmongusik.pickle", "wb"))
 
