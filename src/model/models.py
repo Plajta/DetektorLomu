@@ -11,28 +11,18 @@ import os
 DEVICE = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
 LOG = False
 SAVE = False
-BATCH_SIZE = 4
+BATCH_SIZE = 8
 
 class Universal(nn.Module):
     def __init__(self) -> None:
         super(Universal, self).__init__()
         self.config = {
             "epochs": 10,
-            "optimizer": "adam",
             "metric": "accuracy",
             "batch-size": BATCH_SIZE,
             "dropout": 0.2
         }
         self.model_iter = 0
-
-        if self.config["optimizer"] == "adam":
-            self.optimizer = optim
-        elif self.config["optimizer"] == "SGD":
-            self.optimizer = optim
-
-        else:
-            #default option
-            self.optimizer = optim.Adam(self.parameters(), lr=0.001)
 
     def train_net(self, train):
         #variables
@@ -43,7 +33,12 @@ class Universal(nn.Module):
         self.train()
         self.optimizer.zero_grad()
         for X, y in train:
+            X = X.to(DEVICE)
+            y = y.to(DEVICE)
+            y = torch.unsqueeze(y, 1).float()
+
             output = self(X)
+            output = output.to(DEVICE)
 
             loss = F.binary_cross_entropy(output, y)
             loss.backward()
@@ -52,8 +47,12 @@ class Universal(nn.Module):
 
             total_loss += loss.detach().item()
 
+
+            idx += 1
         if LOG:
             Wandb.wandb.log({"train/loss": total_loss / idx})
+        
+        print(f"train loss: {total_loss / idx}")
 
 
     def test_net(self, test):
@@ -65,18 +64,27 @@ class Universal(nn.Module):
         self.eval()
         with torch.no_grad():
             for X, y in test:
+                X = X.to(DEVICE)
+                y = y.to(DEVICE)
+                y = torch.unsqueeze(y, 1).float()
+
                 output = self(X)
+                output = output.to(DEVICE)
 
                 loss = F.binary_cross_entropy(output, y)
 
                 total_loss += loss
 
+                idx += 1
         if LOG:
             #log every data
             Wandb.wandb.log({"test/loss": total_loss / idx})
 
+        print(f"test loss: {total_loss / idx}")
+
     def run(self, train, test):
         print(f"model DEVICE")
+        self.optimizer = optim.Adam(self.parameters(), lr=0.001)
 
         print(f"SUMMARY:")
         torchinfo.summary(self, (1, 1, 640, 480))
@@ -87,7 +95,7 @@ class Universal(nn.Module):
             Wandb.Init("Lomy", configuration=self.config, run_name=self.model_config["name"])
 
         self.test_net(test)
-        for i_epoch in self.config["epochs"]:
+        for i_epoch in range(self.config["epochs"]):
             print(f"epoch {i_epoch}")
 
             #train net

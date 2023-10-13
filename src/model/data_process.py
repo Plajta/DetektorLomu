@@ -19,7 +19,7 @@ class LomyDataset(Dataset):
     
     def __getitem__(self, idx):
         data = self.loader.get(idx)
-        return ImgTransform(data[0], "torch"), data[1] #X, y
+        return ImgTransform(data[0], "torch"), torch.tensor(data[1]) #X, y
     
     def __len__(self):
         return self.loader.get_length()
@@ -42,6 +42,19 @@ def inspect_dataset(index, dataloader):
     print(label)
     cv2.waitKey(0)
 
+def inspect_classes(dataloader):
+    stepny = 0
+    tvarny = 0
+
+    for i in range(len(dataloader.dataset)):
+        if dataloader.dataset[i][1] == 0:
+            stepny += 1
+        else:
+            tvarny += 1
+    
+    print(f"n of stepny: {stepny}")
+    print(f"n of tvarny: {tvarny}")
+
 data = LomyDataset()
 
 #dataset length calculations
@@ -54,7 +67,9 @@ train_dataset, test_dataset = random_split(data, [train_len, test_len]) #TODO
 train_data = DataLoader(train_dataset, batch_size=BATCH_SIZE, shuffle=True)
 test_data = DataLoader(test_dataset, batch_size=BATCH_SIZE, shuffle=True)
 
-inspect_dataset(0, train_data)
+inspect_classes(train_data)
+inspect_classes(test_data)
+
 if __name__ == "__main__":
     #run neural networks
     #net = ConvNeuralNet()
