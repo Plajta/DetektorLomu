@@ -1,13 +1,17 @@
 from torch.utils.data import Dataset, DataLoader, random_split
 
 from models import BATCH_SIZE, ConvNeuralNet
+from process import Loader
+import os
 
 class LomyDataset(Dataset):
     def __init__(self):
-        self.data = "TODO"
+        print(os.getcwd())
+        self.loader = Loader("dataset/lomy/stepnylom_jpg", "dataset/lomy/tvarnylom_jpg")
     
     def __getitem__(self, idx):
-        return self.data[idx][0], self.data[idx][1]
+        data = self.loader.get(idx)
+        return data[0], self.data[1] #X, y
     
     def __len__(self):
         return len(self.data)
