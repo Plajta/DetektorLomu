@@ -30,4 +30,4 @@ Link: https://drive.google.com/file/d/1k1I_AF1FbsyWtccinHeDZ2C5mzqOiktP/view?usp
 - [x] choose theme
 - [ ] dataset?
 - [ ] model
-- [ ] App na PC
+- [x] App na PC
