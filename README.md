@@ -1,4 +1,4 @@
-# Plajta
+# Lomy
 Amogus
 
 ## KDO CO DELAT
@@ -12,4 +12,7 @@ Aleš, Vašek - Data
 
 ## TODO:
 
-- [ ] choose theme
+- [x] choose theme
+- [ ] dataset?
+- [ ] model
+- [ ] App na PC
