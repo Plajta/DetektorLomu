@@ -1,5 +1,17 @@
 # Lomy
-Amogus
+Binární klasifikace lomů (štěpný x tvárný)
+
+| Model       | Accuracy    |
+| ----------- | ----------- |
+| SVM (SVC)   | 90%         |
+| CNN         | 90%         |
+
+Použité balíčky: 
+    Aplikace:
+        1. `tkinter`
+        
+    Modely:
+        1. `torch`
 
 ## KDO CO DELAT
 
