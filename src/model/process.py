@@ -55,6 +55,9 @@ class Loader:
     
     def get(self,index):
         return self.final_output[index]
+    
+    def get_length(self):
+        return len(self.final_output)
 
     
 
