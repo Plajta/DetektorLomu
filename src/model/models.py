@@ -9,16 +9,16 @@ import os
 
 #init
 DEVICE = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
-LOG = False
-SAVE = True
-BATCH_SIZE = 8
-BATCH_SIZE_TEST = 1
+LOG = True
+SAVE = False
+BATCH_SIZE = 16
+BATCH_SIZE_TEST = 16
 
 class Universal(nn.Module):
     def __init__(self) -> None:
         super(Universal, self).__init__()
         self.config = {
-            "epochs": 10,
+            "epochs": 40,
             "metric": "accuracy",
             "batch-size": BATCH_SIZE,
             "dropout": 0.2
@@ -58,7 +58,7 @@ class Universal(nn.Module):
         if LOG:
             Wandb.wandb.log({"train/loss": total_loss / idx})
         
-        print(f"train loss: {total_loss / idx}, test acc: {total_correct / (idx * BATCH_SIZE)}")
+        print(f"train loss: {total_loss / idx}, train acc: {total_correct / (idx * BATCH_SIZE)}")
 
 
     def test_net(self, test):
@@ -94,7 +94,7 @@ class Universal(nn.Module):
 
     def run(self, train, test):
         print(f"model DEVICE")
-        self.optimizer = optim.Adam(self.parameters(), lr=0.001)
+        self.optimizer = optim.Adam(self.parameters(), lr=0.01)
 
         print(f"SUMMARY:")
         torchinfo.summary(self, (1, 1, 640, 480))
@@ -209,13 +209,17 @@ class ConvNeuralNet(Universal):
         self.pool4 = nn.MaxPool2d((2, 2))
         self.activation4 = nn.ReLU()
 
-        self.conv5 = nn.Conv2d(32, 32, (3, 3))
+        self.conv5 = nn.Conv2d(32, 64, (3, 3))
         self.pool5 = nn.AvgPool2d((2, 2))
         self.activation5 = nn.ReLU()
 
+        self.conv6 = nn.Conv2d(64, 64, (3, 3))
+        self.pool6 = nn.AvgPool2d((2, 2))
+        self.activation6 = nn.ReLU()
+
         self.flat = nn.Flatten()
 
-        self.layer1 = nn.Linear(7488, 2048)
+        self.layer1 = nn.Linear(2560, 2048)
         self.activation_l1 = nn.ReLU()
 
         self.layer2 = nn.Linear(2048, 512)
@@ -249,6 +253,9 @@ class ConvNeuralNet(Universal):
         x = self.conv5(x)
         x = self.activation5(self.pool5(x))
 
+        x = self.conv6(x)
+        x = self.activation6(self.pool6(x))
+
         x = self.flat(x)
 
         #linear
@@ -262,4 +269,6 @@ class ConvNeuralNet(Universal):
         x = self.drop4(self.layer4(x))
         x = self.activation_l4(x)
 
-        return self.activation_fin(self.layer5(x))
+        x = self.layer5(x)
+        x = self.activation_fin(x)
+        return x

@@ -8,3 +8,6 @@
 
 env
 .idea
+
+/src/model/__pycache__/
+/wandb/
