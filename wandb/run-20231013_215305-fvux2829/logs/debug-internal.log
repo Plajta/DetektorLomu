@@ -1,0 +1,102 @@
+2023-10-13 21:53:05,084 INFO    StreamThr :74439 [internal.py:wandb_internal():87] W&B internal server running at pid: 74439, started at: 2023-10-13 21:53:05.084230
+2023-10-13 21:53:05,090 DEBUG   HandlerThread:74439 [handler.py:handle_request():144] handle_request: status
+2023-10-13 21:53:05,092 INFO    WriterThread:74439 [datastore.py:open_for_write():85] open: /media/work/Workspace/Projects/plajta/wandb/run-20231013_215305-fvux2829/run-fvux2829.wandb
+2023-10-13 21:53:05,094 DEBUG   SenderThread:74439 [sender.py:send():336] send: header
+2023-10-13 21:53:05,095 DEBUG   SenderThread:74439 [sender.py:send():336] send: run
+2023-10-13 21:53:05,668 INFO    SenderThread:74439 [dir_watcher.py:__init__():216] watching files in: /media/work/Workspace/Projects/plajta/wandb/run-20231013_215305-fvux2829/files
+2023-10-13 21:53:05,668 INFO    SenderThread:74439 [sender.py:_start_run_threads():1067] run started: fvux2829 with start time 1697226785.081844
+2023-10-13 21:53:05,668 DEBUG   SenderThread:74439 [sender.py:send_request():363] send_request: summary_record
+2023-10-13 21:53:05,669 INFO    SenderThread:74439 [sender.py:_save_file():1321] saving file wandb-summary.json with policy end
+2023-10-13 21:53:05,669 DEBUG   HandlerThread:74439 [handler.py:handle_request():144] handle_request: check_version
+2023-10-13 21:53:05,670 DEBUG   SenderThread:74439 [sender.py:send_request():363] send_request: check_version
+2023-10-13 21:53:05,794 DEBUG   HandlerThread:74439 [handler.py:handle_request():144] handle_request: run_start
+2023-10-13 21:53:05,803 DEBUG   HandlerThread:74439 [system_info.py:__init__():31] System info init
+2023-10-13 21:53:05,803 DEBUG   HandlerThread:74439 [system_info.py:__init__():46] System info init done
+2023-10-13 21:53:05,803 INFO    HandlerThread:74439 [system_monitor.py:start():151] Starting system monitor
+2023-10-13 21:53:05,804 INFO    HandlerThread:74439 [system_monitor.py:probe():172] Collecting system info
+2023-10-13 21:53:05,805 INFO    SystemMonitor:74439 [system_monitor.py:_start():116] Starting system asset monitoring threads
+2023-10-13 21:53:05,806 INFO    SystemMonitor:74439 [interfaces.py:start():168] Started cpu
+2023-10-13 21:53:05,807 INFO    SystemMonitor:74439 [interfaces.py:start():168] Started disk
+2023-10-13 21:53:05,807 INFO    SystemMonitor:74439 [interfaces.py:start():168] Started gpu
+2023-10-13 21:53:05,808 INFO    SystemMonitor:74439 [interfaces.py:start():168] Started memory
+2023-10-13 21:53:05,809 INFO    SystemMonitor:74439 [interfaces.py:start():168] Started network
+2023-10-13 21:53:05,816 DEBUG   HandlerThread:74439 [system_info.py:probe():195] Probing system
+2023-10-13 21:53:05,818 DEBUG   HandlerThread:74439 [system_info.py:_probe_git():180] Probing git
+2023-10-13 21:53:05,824 DEBUG   HandlerThread:74439 [system_info.py:_probe_git():188] Probing git done
+2023-10-13 21:53:05,824 DEBUG   HandlerThread:74439 [system_info.py:probe():241] Probing system done
+2023-10-13 21:53:05,824 DEBUG   HandlerThread:74439 [system_monitor.py:probe():181] {'os': 'Linux-6.2.0-34-generic-x86_64-with-glibc2.35', 'python': '3.10.12', 'heartbeatAt': '2023-10-13T19:53:05.816315', 'startedAt': '2023-10-13T19:53:05.076333', 'docker': None, 'cuda': None, 'args': (), 'state': 'running', 'program': '/media/work/Workspace/Projects/plajta/src/model/data_process.py', 'codePath': 'src/model/data_process.py', 'git': {'remote': 'git@gitlab.dc.fjfi.cvut.cz:hackaton2023/plajta.git', 'commit': '44f8291c933a9a26c2910562ce988fe95b3982a4'}, 'email': 'danpojhan@protonmail.com', 'root': '/media/work/Workspace/Projects/plajta', 'host': 'danusubuntu-ASUS-TUF-Dash-F15-FX517ZM-FX517ZM', 'username': 'danusubuntu', 'executable': '/usr/bin/python3.10', 'cpu_count': 8, 'cpu_count_logical': 12, 'cpu_freq': {'current': 2925.7375833333335, 'min': 400.0, 'max': 4033.3333333333335}, 'cpu_freq_per_core': [{'current': 3571.35, 'min': 400.0, 'max': 4400.0}, {'current': 2721.1, 'min': 400.0, 'max': 4400.0}, {'current': 3862.083, 'min': 400.0, 'max': 4400.0}, {'current': 4052.414, 'min': 400.0, 'max': 4400.0}, {'current': 4070.594, 'min': 400.0, 'max': 4400.0}, {'current': 1433.584, 'min': 400.0, 'max': 4400.0}, {'current': 4037.062, 'min': 400.0, 'max': 4400.0}, {'current': 2600.58, 'min': 400.0, 'max': 4400.0}, {'current': 3106.947, 'min': 400.0, 'max': 3300.0}, {'current': 3226.145, 'min': 400.0, 'max': 3300.0}, {'current': 3272.61, 'min': 400.0, 'max': 3300.0}, {'current': 3254.796, 'min': 400.0, 'max': 3300.0}], 'disk': {'total': 478.97188568115234, 'used': 446.8036231994629}, 'gpu': 'NVIDIA GeForce RTX 3060 Laptop GPU', 'gpu_count': 1, 'gpu_devices': [{'name': 'NVIDIA GeForce RTX 3060 Laptop GPU', 'memory_total': 6442450944}], 'memory': {'total': 15.240917205810547}}
+2023-10-13 21:53:05,824 INFO    HandlerThread:74439 [system_monitor.py:probe():182] Finished collecting system info
+2023-10-13 21:53:05,824 INFO    HandlerThread:74439 [system_monitor.py:probe():185] Publishing system info
+2023-10-13 21:53:05,824 DEBUG   HandlerThread:74439 [system_info.py:_save_pip():51] Saving list of pip packages installed into the current environment
+2023-10-13 21:53:05,825 DEBUG   HandlerThread:74439 [system_info.py:_save_pip():67] Saving pip packages done
+2023-10-13 21:53:05,826 INFO    HandlerThread:74439 [system_monitor.py:probe():187] Finished publishing system info
+2023-10-13 21:53:05,830 DEBUG   SenderThread:74439 [sender.py:send():336] send: files
+2023-10-13 21:53:05,830 INFO    SenderThread:74439 [sender.py:_save_file():1321] saving file wandb-metadata.json with policy now
+2023-10-13 21:53:05,836 DEBUG   HandlerThread:74439 [handler.py:handle_request():144] handle_request: stop_status
+2023-10-13 21:53:05,836 DEBUG   SenderThread:74439 [sender.py:send_request():363] send_request: stop_status
+2023-10-13 21:53:06,173 DEBUG   SenderThread:74439 [sender.py:send():336] send: telemetry
+2023-10-13 21:53:06,173 DEBUG   SenderThread:74439 [sender.py:send():336] send: telemetry
+2023-10-13 21:53:06,173 DEBUG   SenderThread:74439 [sender.py:send():336] send: run
+2023-10-13 21:53:06,502 INFO    SenderThread:74439 [sender.py:send_run():944] updated run: fvux2829
+2023-10-13 21:53:06,675 INFO    Thread-18 :74439 [dir_watcher.py:_on_file_modified():292] file/dir modified: /media/work/Workspace/Projects/plajta/wandb/run-20231013_215305-fvux2829/files/config.yaml
+2023-10-13 21:53:06,675 INFO    Thread-18 :74439 [dir_watcher.py:_on_file_created():275] file/dir created: /media/work/Workspace/Projects/plajta/wandb/run-20231013_215305-fvux2829/files/wandb-metadata.json
+2023-10-13 21:53:06,675 INFO    Thread-18 :74439 [dir_watcher.py:_on_file_created():275] file/dir created: /media/work/Workspace/Projects/plajta/wandb/run-20231013_215305-fvux2829/files/requirements.txt
+2023-10-13 21:53:06,675 INFO    Thread-18 :74439 [dir_watcher.py:_on_file_created():275] file/dir created: /media/work/Workspace/Projects/plajta/wandb/run-20231013_215305-fvux2829/files/wandb-summary.json
+2023-10-13 21:53:06,910 INFO    wandb-upload_0:74439 [upload_job.py:push():138] Uploaded file /tmp/tmpf274axb6wandb/c6bvizlw-wandb-metadata.json
+2023-10-13 21:53:10,503 DEBUG   HandlerThread:74439 [handler.py:handle_request():144] handle_request: status_report
+2023-10-13 21:53:15,505 DEBUG   HandlerThread:74439 [handler.py:handle_request():144] handle_request: status_report
+2023-10-13 21:53:20,506 DEBUG   HandlerThread:74439 [handler.py:handle_request():144] handle_request: status_report
+2023-10-13 21:53:20,836 DEBUG   HandlerThread:74439 [handler.py:handle_request():144] handle_request: keepalive
+2023-10-13 21:53:25,507 DEBUG   HandlerThread:74439 [handler.py:handle_request():144] handle_request: status_report
+2023-10-13 21:53:25,846 DEBUG   HandlerThread:74439 [handler.py:handle_request():144] handle_request: keepalive
+2023-10-13 21:53:30,509 DEBUG   HandlerThread:74439 [handler.py:handle_request():144] handle_request: status_report
+2023-10-13 21:53:30,853 DEBUG   HandlerThread:74439 [handler.py:handle_request():144] handle_request: keepalive
+2023-10-13 21:53:35,516 DEBUG   HandlerThread:74439 [handler.py:handle_request():144] handle_request: status_report
+2023-10-13 21:53:35,859 DEBUG   HandlerThread:74439 [handler.py:handle_request():144] handle_request: keepalive
+2023-10-13 21:53:36,687 INFO    Thread-18 :74439 [dir_watcher.py:_on_file_modified():292] file/dir modified: /media/work/Workspace/Projects/plajta/wandb/run-20231013_215305-fvux2829/files/config.yaml
+2023-10-13 21:53:40,796 DEBUG   HandlerThread:74439 [handler.py:handle_request():144] handle_request: status_report
+2023-10-13 21:53:40,861 DEBUG   HandlerThread:74439 [handler.py:handle_request():144] handle_request: keepalive
+2023-10-13 21:53:45,798 DEBUG   HandlerThread:74439 [handler.py:handle_request():144] handle_request: status_report
+2023-10-13 21:53:45,866 DEBUG   HandlerThread:74439 [handler.py:handle_request():144] handle_request: keepalive
+2023-10-13 21:53:50,800 DEBUG   HandlerThread:74439 [handler.py:handle_request():144] handle_request: status_report
+2023-10-13 21:53:50,870 DEBUG   HandlerThread:74439 [handler.py:handle_request():144] handle_request: keepalive
+2023-10-13 21:53:55,801 DEBUG   HandlerThread:74439 [handler.py:handle_request():144] handle_request: status_report
+2023-10-13 21:53:55,876 DEBUG   HandlerThread:74439 [handler.py:handle_request():144] handle_request: keepalive
+2023-10-13 21:54:00,802 DEBUG   HandlerThread:74439 [handler.py:handle_request():144] handle_request: status_report
+2023-10-13 21:54:00,881 DEBUG   HandlerThread:74439 [handler.py:handle_request():144] handle_request: keepalive
+2023-10-13 21:54:05,805 DEBUG   HandlerThread:74439 [handler.py:handle_request():144] handle_request: status_report
+2023-10-13 21:54:05,810 DEBUG   SystemMonitor:74439 [system_monitor.py:_start():130] Starting system metrics aggregation loop
+2023-10-13 21:54:05,812 DEBUG   SenderThread:74439 [sender.py:send():336] send: stats
+2023-10-13 21:54:05,888 DEBUG   HandlerThread:74439 [handler.py:handle_request():144] handle_request: keepalive
+2023-10-13 21:54:10,814 DEBUG   HandlerThread:74439 [handler.py:handle_request():144] handle_request: status_report
+2023-10-13 21:54:10,891 DEBUG   HandlerThread:74439 [handler.py:handle_request():144] handle_request: keepalive
+2023-10-13 21:54:15,815 DEBUG   HandlerThread:74439 [handler.py:handle_request():144] handle_request: status_report
+2023-10-13 21:54:15,895 DEBUG   HandlerThread:74439 [handler.py:handle_request():144] handle_request: keepalive
+2023-10-13 21:54:18,539 DEBUG   HandlerThread:74439 [handler.py:handle_request():144] handle_request: partial_history
+2023-10-13 21:54:18,540 DEBUG   SenderThread:74439 [sender.py:send():336] send: history
+2023-10-13 21:54:18,541 DEBUG   SenderThread:74439 [sender.py:send_request():363] send_request: summary_record
+2023-10-13 21:54:18,544 INFO    SenderThread:74439 [sender.py:_save_file():1321] saving file wandb-summary.json with policy end
+2023-10-13 21:54:18,711 INFO    Thread-18 :74439 [dir_watcher.py:_on_file_modified():292] file/dir modified: /media/work/Workspace/Projects/plajta/wandb/run-20231013_215305-fvux2829/files/wandb-summary.json
+2023-10-13 21:54:18,711 INFO    Thread-18 :74439 [dir_watcher.py:_on_file_created():275] file/dir created: /media/work/Workspace/Projects/plajta/wandb/run-20231013_215305-fvux2829/files/output.log
+2023-10-13 21:54:20,713 INFO    Thread-18 :74439 [dir_watcher.py:_on_file_modified():292] file/dir modified: /media/work/Workspace/Projects/plajta/wandb/run-20231013_215305-fvux2829/files/output.log
+2023-10-13 21:54:20,900 DEBUG   HandlerThread:74439 [handler.py:handle_request():144] handle_request: keepalive
+2023-10-13 21:54:21,547 DEBUG   HandlerThread:74439 [handler.py:handle_request():144] handle_request: status_report
+2023-10-13 21:54:25,903 DEBUG   HandlerThread:74439 [handler.py:handle_request():144] handle_request: keepalive
+2023-10-13 21:54:26,549 DEBUG   HandlerThread:74439 [handler.py:handle_request():144] handle_request: status_report
+2023-10-13 21:54:30,909 DEBUG   HandlerThread:74439 [handler.py:handle_request():144] handle_request: keepalive
+2023-10-13 21:54:31,554 DEBUG   HandlerThread:74439 [handler.py:handle_request():144] handle_request: status_report
+2023-10-13 21:54:35,816 DEBUG   SenderThread:74439 [sender.py:send():336] send: stats
+2023-10-13 21:54:35,914 DEBUG   HandlerThread:74439 [handler.py:handle_request():144] handle_request: keepalive
+2023-10-13 21:54:36,818 DEBUG   HandlerThread:74439 [handler.py:handle_request():144] handle_request: status_report
+2023-10-13 21:54:40,922 DEBUG   HandlerThread:74439 [handler.py:handle_request():144] handle_request: keepalive
+2023-10-13 21:54:41,225 DEBUG   HandlerThread:74439 [handler.py:handle_request():144] handle_request: partial_history
+2023-10-13 21:54:41,226 DEBUG   SenderThread:74439 [sender.py:send():336] send: history
+2023-10-13 21:54:41,226 DEBUG   SenderThread:74439 [sender.py:send_request():363] send_request: summary_record
+2023-10-13 21:54:41,229 INFO    SenderThread:74439 [sender.py:_save_file():1321] saving file wandb-summary.json with policy end
+2023-10-13 21:54:41,728 INFO    Thread-18 :74439 [dir_watcher.py:_on_file_modified():292] file/dir modified: /media/work/Workspace/Projects/plajta/wandb/run-20231013_215305-fvux2829/files/wandb-summary.json
+2023-10-13 21:54:42,230 DEBUG   HandlerThread:74439 [handler.py:handle_request():144] handle_request: status_report
+2023-10-13 21:54:42,728 INFO    Thread-18 :74439 [dir_watcher.py:_on_file_modified():292] file/dir modified: /media/work/Workspace/Projects/plajta/wandb/run-20231013_215305-fvux2829/files/output.log
+2023-10-13 21:54:45,927 DEBUG   HandlerThread:74439 [handler.py:handle_request():144] handle_request: keepalive
+2023-10-13 21:54:47,232 DEBUG   HandlerThread:74439 [handler.py:handle_request():144] handle_request: status_report
+2023-10-13 21:54:50,936 DEBUG   HandlerThread:74439 [handler.py:handle_request():144] handle_request: keepalive
+2023-10-13 21:54:52,233 DEBUG   HandlerThread:74439 [handler.py:handle_request():144] handle_request: status_report

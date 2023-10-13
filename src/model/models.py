@@ -8,7 +8,7 @@ import Wandb
 import os
 
 #init
-DEVICE = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
+DEVICE = "cpu"#torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
 LOG = False
 SAVE = False
 BATCH_SIZE = 8
@@ -40,6 +40,7 @@ class Universal(nn.Module):
             output = self(X)
             output = output.to(DEVICE)
 
+            #loss = F.binary_cross_entropy(output, y)
             loss = F.binary_cross_entropy(output, y)
             loss.backward()
 
@@ -47,12 +48,15 @@ class Universal(nn.Module):
 
             total_loss += loss.detach().item()
 
+            for i in range(output.shape[0]):
+                if output[i] == y[i]:
+                    total_correct += 1
 
             idx += 1
         if LOG:
             Wandb.wandb.log({"train/loss": total_loss / idx})
         
-        print(f"train loss: {total_loss / idx}")
+        print(f"train loss: {total_loss / idx}, test acc: {total_correct / (idx * BATCH_SIZE)}")
 
 
     def test_net(self, test):
@@ -71,16 +75,20 @@ class Universal(nn.Module):
                 output = self(X)
                 output = output.to(DEVICE)
 
+                #loss = F.binary_cross_entropy(output, y)
                 loss = F.binary_cross_entropy(output, y)
+                total_loss += loss.detach().item()
 
-                total_loss += loss
+                for i in range(output.shape[0]):
+                    if output[i] == y[i]:
+                        total_correct += 1
 
                 idx += 1
         if LOG:
             #log every data
             Wandb.wandb.log({"test/loss": total_loss / idx})
 
-        print(f"test loss: {total_loss / idx}")
+        print(f"test loss: {total_loss / idx}, test acc: {total_correct / (idx * BATCH_SIZE)}")
 
     def run(self, train, test):
         print(f"model DEVICE")
@@ -241,6 +249,4 @@ class ConvNeuralNet(Universal):
         x = self.drop4(self.layer4(x))
         x = self.activation_l4(x)
 
-        x = self.activation_fin(self.layer5(x))
-
-        return x
+        return self.activation_fin(self.layer5(x))

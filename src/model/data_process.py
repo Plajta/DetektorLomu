@@ -18,7 +18,7 @@ class LomyDataset(Dataset):
         self.loader = Loader("dataset/lomy/stepnylom_jpg", "dataset/lomy/tvarnylom_jpg")
     
     def __getitem__(self, idx):
-        data = self.loader.get(idx)
+        data = self.loader.get(idx).copy()
         return ImgTransform(data[0], "torch"), torch.tensor(data[1]) #X, y
     
     def __len__(self):
@@ -67,11 +67,13 @@ train_dataset, test_dataset = random_split(data, [train_len, test_len]) #TODO
 train_data = DataLoader(train_dataset, batch_size=BATCH_SIZE, shuffle=True)
 test_data = DataLoader(test_dataset, batch_size=BATCH_SIZE, shuffle=True)
 
-inspect_classes(train_data)
-inspect_classes(test_data)
+#inspect_classes(train_data)
+#inspect_classes(test_data)
+
+#for i in range(200):
+#    inspect_dataset(i, test_data)
 
 if __name__ == "__main__":
     #run neural networks
-    #net = ConvNeuralNet()
-    #net.run(train_data, test_data)
-    pass
+    net = ConvNeuralNet()
+    net.run(train_data, test_data)

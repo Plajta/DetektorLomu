@@ -1,0 +1,105 @@
+{
+    "os": "Linux-6.2.0-34-generic-x86_64-with-glibc2.35",
+    "python": "3.10.12",
+    "heartbeatAt": "2023-10-13T19:53:05.816315",
+    "startedAt": "2023-10-13T19:53:05.076333",
+    "docker": null,
+    "cuda": null,
+    "args": [],
+    "state": "running",
+    "program": "/media/work/Workspace/Projects/plajta/src/model/data_process.py",
+    "codePath": "src/model/data_process.py",
+    "git": {
+        "remote": "git@gitlab.dc.fjfi.cvut.cz:hackaton2023/plajta.git",
+        "commit": "44f8291c933a9a26c2910562ce988fe95b3982a4"
+    },
+    "email": "danpojhan@protonmail.com",
+    "root": "/media/work/Workspace/Projects/plajta",
+    "host": "danusubuntu-ASUS-TUF-Dash-F15-FX517ZM-FX517ZM",
+    "username": "danusubuntu",
+    "executable": "/usr/bin/python3.10",
+    "cpu_count": 8,
+    "cpu_count_logical": 12,
+    "cpu_freq": {
+        "current": 2925.7375833333335,
+        "min": 400.0,
+        "max": 4033.3333333333335
+    },
+    "cpu_freq_per_core": [
+        {
+            "current": 3571.35,
+            "min": 400.0,
+            "max": 4400.0
+        },
+        {
+            "current": 2721.1,
+            "min": 400.0,
+            "max": 4400.0
+        },
+        {
+            "current": 3862.083,
+            "min": 400.0,
+            "max": 4400.0
+        },
+        {
+            "current": 4052.414,
+            "min": 400.0,
+            "max": 4400.0
+        },
+        {
+            "current": 4070.594,
+            "min": 400.0,
+            "max": 4400.0
+        },
+        {
+            "current": 1433.584,
+            "min": 400.0,
+            "max": 4400.0
+        },
+        {
+            "current": 4037.062,
+            "min": 400.0,
+            "max": 4400.0
+        },
+        {
+            "current": 2600.58,
+            "min": 400.0,
+            "max": 4400.0
+        },
+        {
+            "current": 3106.947,
+            "min": 400.0,
+            "max": 3300.0
+        },
+        {
+            "current": 3226.145,
+            "min": 400.0,
+            "max": 3300.0
+        },
+        {
+            "current": 3272.61,
+            "min": 400.0,
+            "max": 3300.0
+        },
+        {
+            "current": 3254.796,
+            "min": 400.0,
+            "max": 3300.0
+        }
+    ],
+    "disk": {
+        "total": 478.97188568115234,
+        "used": 446.8036231994629
+    },
+    "gpu": "NVIDIA GeForce RTX 3060 Laptop GPU",
+    "gpu_count": 1,
+    "gpu_devices": [
+        {
+            "name": "NVIDIA GeForce RTX 3060 Laptop GPU",
+            "memory_total": 6442450944
+        }
+    ],
+    "memory": {
+        "total": 15.240917205810547
+    }
+}
