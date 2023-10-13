@@ -82,18 +82,28 @@ class Loader:
     def generate_dataset(self,number_of_articles):
         from_number = round(number_of_articles/len(self.output))
         print(from_number)
+        print(len(self.output))
+        print(len(self.output[0]))
+
+        my_array = np.array(self.output)
+
+        # Get the shape of the array
+        shape = my_array.shape
+        print("shape:")
+        print(shape)
+
         for i in range(from_number):
-            for j in self.output:
-                self.training.append(j[i])
+            for y,j in enumerate(self.output):
+                self.training.append([j[i],y])
 
 
         random.shuffle(self.training)
 
         print(range(from_number,len(self.final_output[0])))
 
-        for dir in self.output:
+        for y,dir in enumerate(self.output):
             for i in range(from_number,len(dir)):
-                self.testing.append(dir[i])
+                self.testing.append([dir[i],y])
         random.shuffle(self.testing)
 
     def get_some_bitches(self):
@@ -106,12 +116,16 @@ class Loader:
 if __name__ == "__main__":
     ld = Loader("dataset/lomy/stepnylom_jpg","dataset/lomy/tvarnylom_jpg")
     print(ld.get(6))
-    ld.generate_dataset(400)
+    ld.generate_dataset(8)
     print("zmrd")
     print(ld.get_length(0))
     print(ld.get_length(1))
     print(ld.get_length(2))
     cv2.imshow('Grayscale Image', ld.get(2)[0])
+    print(ld.get_length())
+    ld.randomize()
+    for i in range(4):
+        print(ld.get(i,2)[1])
 
     # Wait for a key event and close the windows
     cv2.waitKey(0)
