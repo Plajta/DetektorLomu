@@ -2,34 +2,25 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 import torch.optim as optim
+import torchinfo
+
+import Wandb
+import os
 
 #init
 DEVICE = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
+LOG = True
+SAVE = True
+BATCH_SIZE = 8
 
-class Universal(nn.Module):
-    def __init__(self) -> None:
-        super(Universal, self).__init__()
-        self.config = {
-            "epochs": 10,
-            "optimizer": "adam",
-            "metric": "accuracy",
-            "batch-size": 8,
-            "dropout": 0.2
-        }
-
-    def train_net(self, train):
-        pass
-
-    def test_net(self, test):
-        pass
-
-    def run(self, train, test):
-
-        print(f"model DEVICE")
-
-class NeuralNet(Universal):
+class NeuralNet(nn.Module):
     def __init__(self):
         super(NeuralNet, self).__init__()
+
+        self.model_config = {
+            "name": "NeuralNet"
+        }
+
         self.flatten = nn.Flatten()
 
         self.layer1 = nn.Linear(307200, 65536)
@@ -74,9 +65,13 @@ class NeuralNet(Universal):
         x = self.activation_fin(self.layer6(x))
         return x
 
-class ConvNeuralNet(Universal):
+class ConvNeuralNet(nn.Module):
     def __init__(self):
         super(ConvNeuralNet, self).__init__()
+
+        self.model_config = {
+            "name": "ConvNeuralNet"
+        }
 
         self.conv1 = nn.Conv2d(1, 3, (3, 3))
         self.pool1 = nn.MaxPool2d((2, 2))
@@ -150,3 +145,94 @@ class ConvNeuralNet(Universal):
         x = self.activation_fin(self.layer5(x))
 
         return x
+    
+class Universal(NeuralNet):
+    def __init__(self) -> None:
+        super(Universal, self).__init__()
+        self.config = {
+            "epochs": 10,
+            "optimizer": "adam",
+            "metric": "accuracy",
+            "batch-size": BATCH_SIZE,
+            "dropout": 0.2
+        }
+        self.model_iter = 0
+
+        if self.config["optimizer"] == "adam":
+            self.optimizer = optim
+        elif self.config["optimizer"] == "SGD":
+            self.optimizer = optim
+
+        else:
+            #default option
+            self.optimizer = optim.Adam(self.parameters(), lr=0.001)
+
+    def train_net(self, train):
+        #variables
+        total_loss = 0
+        total_correct = 0
+        idx = 0
+
+        self.train()
+        self.optimizer.zero_grad()
+        for X, y in train:
+            output = self(X)
+
+            loss = F.binary_cross_entropy(output, y)
+            loss.backward()
+
+            self.optimizer.step()
+
+            total_loss += loss.detach().item()
+
+        if LOG:
+            Wandb.wandb.log({"train/loss": total_loss / idx})
+
+
+    def test_net(self, test):
+        #variables
+        total_loss = 0
+        total_correct = 0
+        idx = 0
+        
+        self.eval()
+        with torch.no_grad():
+            for X, y in test:
+                output = self(X)
+
+                loss = F.binary_cross_entropy(output, y)
+
+                total_loss += loss
+
+        if LOG:
+            #log every data
+            Wandb.wandb.log({"test/loss": total_loss / idx})
+
+    def run(self, train, test):
+        print(f"model DEVICE")
+
+        print(f"SUMMARY:")
+        torchinfo.summary(self, (1, 1, 640, 480))
+
+        self.to(DEVICE)
+
+        if LOG:
+            Wandb.Init("Lomy", configuration=self.config, run_name=self.model_config["name"])
+
+        self.test_net(test)
+        for i_epoch in self.config["epochs"]:
+            print(f"epoch {i_epoch}")
+
+            #train net
+            self.train_net(train)
+
+            #test net
+            self.test_net(test)
+
+            if SAVE:
+                torch.save(self, f"{os.getcwd()}/src/model/saved/{self.model_config['name']}{self.model_iter}.pth")
+
+            self.model_iter += 1
+
+        if LOG:
+            Wandb.End()
