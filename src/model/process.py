@@ -57,7 +57,7 @@ class Loader:
         return self.merge_and_randomize(self.output)
     
     def randomize(self):
-        self.final_output = random.shuffle(self.final_output)
+        random.shuffle(self.final_output)
     
     def get(self,index,which_dataset=0):
 
