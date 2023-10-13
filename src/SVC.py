@@ -25,14 +25,15 @@ for i in Categories:
 
     for img in os.listdir(path):
         bruh += 1
-        if bruh <= 100:
+        if bruh <= 150:
             continue
         img_array = imread(os.path.join(path, img))
-        img_resized = resize(img_array, (150, 150, 3))
+        img_resized = resize(img_array, (150, 150, 1))
+        img_resized = img_resized / 255
         flat_data_arr.append(img_resized.flatten())
         target_arr.append(Categories.index(i))
-        if bruh >= 200:
-            breaks
+        if bruh >= 250:
+            break
 
     print(f'loaded category: {i} successfully.')
 
