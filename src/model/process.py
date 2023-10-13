@@ -120,6 +120,7 @@ class Loader:
 
 
 
+
 if __name__ == "__main__":
     ld = Loader("dataset/lomy/stepnylom_jpg","dataset/lomy/tvarnylom_jpg")
     print(ld.get(6))
