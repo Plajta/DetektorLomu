@@ -8,10 +8,11 @@ import Wandb
 import os
 
 #init
-DEVICE = "cpu"#torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
+DEVICE = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
 LOG = False
-SAVE = False
+SAVE = True
 BATCH_SIZE = 8
+BATCH_SIZE_TEST = 1
 
 class Universal(nn.Module):
     def __init__(self) -> None:
@@ -31,8 +32,9 @@ class Universal(nn.Module):
         idx = 0
 
         self.train()
-        self.optimizer.zero_grad()
         for X, y in train:
+            self.optimizer.zero_grad()
+
             X = X.to(DEVICE)
             y = y.to(DEVICE)
             y = torch.unsqueeze(y, 1).float()
@@ -49,7 +51,7 @@ class Universal(nn.Module):
             total_loss += loss.detach().item()
 
             for i in range(output.shape[0]):
-                if output[i] == y[i]:
+                if torch.round(output[i]) == y[i]:
                     total_correct += 1
 
             idx += 1
@@ -80,7 +82,7 @@ class Universal(nn.Module):
                 total_loss += loss.detach().item()
 
                 for i in range(output.shape[0]):
-                    if output[i] == y[i]:
+                    if torch.round(output[i]) == y[i]:
                         total_correct += 1
 
                 idx += 1
@@ -119,6 +121,17 @@ class Universal(nn.Module):
 
         if LOG:
             Wandb.End()
+
+    def inference(self, img):
+        img = img.to(DEVICE)
+
+        output = self(img)
+        output = output.to(DEVICE)
+
+        if output.detach().item() == 0:
+            print("detekovano: stepny lom")
+        elif output.detach().item() == 0:
+            print("detekovano: tvarny lom")
 
 class NeuralNet(Universal):
     def __init__(self):

@@ -1,6 +1,6 @@
 from torch.utils.data import Dataset, DataLoader, random_split
 
-from models import BATCH_SIZE, ConvNeuralNet
+from models import BATCH_SIZE, BATCH_SIZE_TEST, ConvNeuralNet
 from process import Loader
 import os
 import cv2
@@ -65,7 +65,7 @@ train_len = length - test_len
 train_dataset, test_dataset = random_split(data, [train_len, test_len]) #TODO
 
 train_data = DataLoader(train_dataset, batch_size=BATCH_SIZE, shuffle=True)
-test_data = DataLoader(test_dataset, batch_size=BATCH_SIZE, shuffle=True)
+test_data = DataLoader(test_dataset, batch_size=BATCH_SIZE_TEST, shuffle=True)
 
 #inspect_classes(train_data)
 #inspect_classes(test_data)
