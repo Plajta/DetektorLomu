@@ -1,10 +1,10 @@
 import os
 import cv2
-import numpy as np
 
 class Loader:
     def __init__(self, *args):
         self.dir_paths = args
+        self.resize = (640,480)
 
     def do(self):
         output = []
@@ -14,6 +14,10 @@ class Loader:
                 for filename in os.listdir(folder_path):
                     if filename.endswith(('.jpg', '.jpeg', '.png')):
                         img = cv2.imread(os.path.join(folder_path, filename))
+
+                        # ořezávání
+
+                        img = cv2.resize(img, self.resize)
                         output[i].append(img)
 
                 if output[i]:
