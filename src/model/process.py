@@ -34,9 +34,9 @@ class Loader:
                         left_corner = img[round(len(img)*0.88):round(len(img)),0:round(len(img[0])*0.15)]
                         right_corner = img[round(len(img)*0.88):round(len(img)),round(len(img[0])*0.85):round(len(img[0]))]
                         if (np.sum((left_corner<20)) >= 500 or np.sum((right_corner<20)) >= 500): img = img[0:round(len(img)*0.88),:]
-                        for num, line in enumerate(img):
-                            if sum(line>=200)>50 and num>len(img)*0.8:
-                                img = img[0:num-30]
+                        for num, line in enumerate(img[round(len(img)*0.8):len(img)]):
+                            if sum(line>=200)>50:
+                                img = img[0:round(len(img)*0.8)+num-30]
                                 break
                         # ořezávání
 
@@ -60,7 +60,6 @@ class Loader:
         random.shuffle(self.final_output)
     
     def get(self,index,which_dataset=0):
-
         match which_dataset:
             case 0:
                 return self.final_output[index]
@@ -68,7 +67,15 @@ class Loader:
                 return self.training[index]
             case 2:
                 return self.testing[index]
-        
+
+    def get_array(self,which_dataset=0):
+        match which_dataset:
+            case 0:
+                return self.final_output
+            case 1:
+                return self.training
+            case 2:
+                return self.testing        
     
     def get_length(self,which_dataset=0):
         match which_dataset:
@@ -82,18 +89,28 @@ class Loader:
     def generate_dataset(self,number_of_articles):
         from_number = round(number_of_articles/len(self.output))
         print(from_number)
+        print(len(self.output))
+        print(len(self.output[0]))
+
+        my_array = np.array(self.output)
+
+        # Get the shape of the array
+        shape = my_array.shape
+        print("shape:")
+        print(shape)
+
         for i in range(from_number):
-            for j in self.output:
-                self.training.append(j[i])
+            for y,j in enumerate(self.output):
+                self.training.append([j[i],y])
 
 
         random.shuffle(self.training)
 
         print(range(from_number,len(self.final_output[0])))
 
-        for dir in self.output:
+        for y,dir in enumerate(self.output):
             for i in range(from_number,len(dir)):
-                self.testing.append(dir[i])
+                self.testing.append([dir[i],y])
         random.shuffle(self.testing)
 
     def get_some_bitches(self):
@@ -103,15 +120,20 @@ class Loader:
 
 
 
+
 if __name__ == "__main__":
     ld = Loader("dataset/lomy/stepnylom_jpg","dataset/lomy/tvarnylom_jpg")
     print(ld.get(6))
-    ld.generate_dataset(400)
+    ld.generate_dataset(8)
     print("zmrd")
     print(ld.get_length(0))
     print(ld.get_length(1))
     print(ld.get_length(2))
     cv2.imshow('Grayscale Image', ld.get(2)[0])
+    print(ld.get_length())
+    ld.randomize()
+    for i in range(4):
+        print(ld.get(i,2)[1])
 
     # Wait for a key event and close the windows
     cv2.waitKey(0)
