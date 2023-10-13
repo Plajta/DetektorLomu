@@ -1,10 +1,9 @@
 from torch.utils.data import Dataset, DataLoader, random_split
-import torch
 
-from models import BATCH_SIZE, Universal
+from models import BATCH_SIZE, ConvNeuralNet
 
 class LomyDataset(Dataset):
-    def __init__(self, type):
+    def __init__(self):
         self.data = "TODO"
     
     def __getitem__(self, idx):
@@ -21,5 +20,5 @@ test_data = DataLoader(test_dataset, batch_size=BATCH_SIZE, shuffle=True)
 
 if __name__ == "__main__":
     #run neural networks
-    net = Universal()
+    net = ConvNeuralNet()
     net.run(train_data, test_data)
