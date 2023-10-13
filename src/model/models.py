@@ -11,6 +11,7 @@ import os
 DEVICE = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
 LOG = True
 SAVE = True
+BATCH_SIZE = 8
 
 class NeuralNet(nn.Module):
     def __init__(self):
@@ -152,7 +153,7 @@ class Universal(NeuralNet):
             "epochs": 10,
             "optimizer": "adam",
             "metric": "accuracy",
-            "batch-size": 8,
+            "batch-size": BATCH_SIZE,
             "dropout": 0.2
         }
         self.model_iter = 0
@@ -193,15 +194,15 @@ class Universal(NeuralNet):
         total_loss = 0
         total_correct = 0
         idx = 0
-
-        torch.no_grad()
+        
         self.eval()
-        for X, y in test:
-            output = self(X)
+        with torch.no_grad():
+            for X, y in test:
+                output = self(X)
 
-            loss = F.binary_cross_entropy(output, y)
+                loss = F.binary_cross_entropy(output, y)
 
-            total_loss += loss
+                total_loss += loss
 
         if LOG:
             #log every data
@@ -235,6 +236,3 @@ class Universal(NeuralNet):
 
         if LOG:
             Wandb.End()
-
-if __name__ == "__main__":
-    pass
