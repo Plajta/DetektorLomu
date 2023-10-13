@@ -1,6 +1,7 @@
 import os
 import cv2
 import random
+import numpy as np
 
 class Loader:
     def __init__(self, *args):
@@ -28,9 +29,13 @@ class Loader:
                         img = cv2.imread(os.path.join(folder_path, filename))
                         img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 
-                        height, width = img.shape[:2]
-                        crop_height = int(height * (1 - 0.3))
-                        img = img[:crop_height, :]
+                        left_corner = img[round(len(img)*0.88):round(len(img)),0:round(len(img[0])*0.15)]
+                        right_corner = img[round(len(img)*0.88):round(len(img)),round(len(img[0])*0.85):round(len(img[0]))]
+                        if (np.sum((left_corner<20)) >= 500 or np.sum((right_corner<20)) >= 500): img = img[0:round(len(img)*0.88),:]
+                        for num, line in enumerate(img):
+                            if sum(line>=200)>50 and num>len(img)*0.8:
+                                img = img[0:num-30]
+                                break
                         # ořezávání
 
                         img = cv2.resize(img, self.resize)
