@@ -3,7 +3,9 @@ Amogus
 
 ## KDO CO DELAT
 
- Andrii - Mega Appka
+Andrii - Appka
+Dan, Honza - Model
+Aleš, Vašek - Data
 
 
 ## TODO:
