@@ -4,7 +4,8 @@ Binární klasifikace lomů (štěpný x tvárný)
 | Model       | Accuracy    |
 | ----------- | ----------- |
 | SVM (SVC)   | 79.83%      |
-| CNN         | 90%         |
+| CNN         | 80%         |
+| KNN         | 79-84%      |
 
 Použité balíčky: 
     Aplikace:
@@ -28,6 +29,11 @@ Link: https://drive.google.com/file/d/1k1I_AF1FbsyWtccinHeDZ2C5mzqOiktP/view?usp
 ## TODO:
 
 - [x] choose theme
-- [ ] dataset?
+- [x] dataset preprocessing
+- [ ] dataset processing fix
 - [ ] model
+- [ ] Data augmentation
+- [ ] Early stopping?
+- [ ] Grafy
 - [x] App na PC
+- [ ] Inference na apku
