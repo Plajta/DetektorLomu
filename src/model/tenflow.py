@@ -3,6 +3,7 @@ from tensorflow import keras
 from process import Loader
 import wandb
 from wandb.keras import WandbMetricsLogger
+from keras.utils import plot_model
 
 BATCH_SIZE = 8
 EPOCHS = 2
@@ -52,11 +53,15 @@ model.add(keras.layers.Dropout(0.5))
 model.add(keras.layers.Dense(1, activation="sigmoid"))
 model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
 
+model.summary()
+
 history = model.fit(train_dataset, epochs=EPOCHS, use_multiprocessing=False, callbacks=[WandbMetricsLogger()])
 
 model.evaluate(test_dataset, callbacks=[WandbMetricsLogger()])
 
 model.save("src/model/saved/NeuralNet/cnn.keras")
+plot_model(model, to_file='model_plot.png', show_shapes=True, show_layer_names=True)
+
 print("model saved!")
 
 wandb.finish()
