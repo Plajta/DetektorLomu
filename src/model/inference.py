@@ -17,7 +17,7 @@ def infer_CNN(X):
     X = tf.expand_dims(X/255, axis=-1)
     X = tf.expand_dims(X, axis=0)
 
-    y_hat = model.predict(X)
+    y_hat = round(model.predict(X)[0][0])
     print(y_hat)
     return round(y_hat)
 

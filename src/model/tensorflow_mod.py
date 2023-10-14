@@ -6,9 +6,10 @@ import matplotlib.pyplot as plt
 import matplotlib
 matplotlib.use("TkAgg")
 
-BATCH_SIZE = 32
+BATCH_SIZE = 4
 EPOCHS = 20
 
+SLICE_FACTOR = 4
 
 print("Loading....")        
 loader = Loader("dataset/lomy/stepnylom_jpg","dataset/lomy/tvarnylom_jpg")
@@ -26,15 +27,60 @@ test_y = [i[1] for i in test_data]
 train_x = [i[0]/255 for i in train_data]
 train_y = [i[1] for i in train_data]
 
-print(train_x)
+mod_train_x = []
+mod_train_y = []
+
+mod_test_x = []
+mod_test_y = []
+
+fraction_train_x = []
+fraction_train_y = []
+
+fraction_test_x = []
+fraction_test_y = []
 
 #reformat to ensemble
+
+num_rows = 4
+num_cols = 4
+
 for i in range(len(train_x)):
-    pass
+    img = train_x[i]
+    height, width, channels = img.shape
+
+    sub_img_height = height // num_rows
+    sub_img_width = width // num_cols
+
+    for i in range(num_rows):
+        for j in range(num_cols):
+            y_start = i * sub_img_height
+            y_end = (i + 1) * sub_img_height
+            x_start = j * sub_img_width
+            x_end = (j + 1) * sub_img_width
+
+            sub_image = img[y_start:y_end, x_start:x_end]
+
+            fraction_train_x.append(sub_image)
+            fraction_train_y.append(train_y[i])
 
 for i in range(len(test_x)):
-    pass
+    img = test_x[i]
+    height, width, channels = img.shape
 
+    sub_img_height = height // num_rows
+    sub_img_width = width // num_cols
+
+    for i in range(num_rows):
+        for j in range(num_cols):
+            y_start = i * sub_img_height
+            y_end = (i + 1) * sub_img_height
+            x_start = j * sub_img_width
+            x_end = (j + 1) * sub_img_width
+
+            sub_image = img[y_start:y_end, x_start:x_end]
+
+            fraction_test_x.append(sub_image)
+            fraction_test_y.append(test_y[i])
 
 train_dataset = tf.data.Dataset.from_tensor_slices((train_x, train_y))
 test_dataset = tf.data.Dataset.from_tensor_slices((test_x, test_y))
@@ -43,18 +89,14 @@ train_dataset = train_dataset.shuffle(69).batch(BATCH_SIZE)
 test_dataset = test_dataset.shuffle(69).batch(BATCH_SIZE)
 
 model = keras.models.Sequential()
-model.add(keras.layers.Input(batch_size=BATCH_SIZE,shape=(480,640,1)))
-model.add(keras.layers.Conv2D(32, kernel_size=(5, 5), activation="relu"))
+model.add(keras.layers.Input(batch_size=BATCH_SIZE,shape=(120,160,1)))
+model.add(keras.layers.Conv2D(32, kernel_size=(3, 3), activation="relu"))
 model.add(keras.layers.MaxPooling2D(pool_size=(2, 2)))
-model.add(keras.layers.Conv2D(64, kernel_size=(5, 5), activation="relu"))
-model.add(keras.layers.MaxPooling2D(pool_size=(2, 2)))
-model.add(keras.layers.Conv2D(64, (3, 3), activation="relu"))
-model.add(keras.layers.MaxPooling2D(pool_size=(2, 2)))
-model.add(keras.layers.Conv2D(128, (3, 3), activation="relu"))
-model.add(keras.layers.MaxPooling2D(pool_size=(2, 2)))
-model.add(keras.layers.Conv2D(128, (3, 3), activation="relu"))
+model.add(keras.layers.Conv2D(32, kernel_size=(3, 3), activation="relu"))
 model.add(keras.layers.MaxPooling2D(pool_size=(2, 2)))
 model.add(keras.layers.Conv2D(64, (3, 3), activation="relu"))
+model.add(keras.layers.MaxPooling2D(pool_size=(2, 2)))
+model.add(keras.layers.Conv2D(32, (3, 3), activation="relu"))
 model.add(keras.layers.MaxPooling2D(pool_size=(2, 2)))
 
 model.add(keras.layers.Flatten())
