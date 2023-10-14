@@ -17,8 +17,11 @@ def infer_CNN(X):
     X = tf.expand_dims(X, axis=0)
 
     y_hat = round(model.predict(X)[0][0])
-    
+
     if y_hat == 0:
         return "štěpný lom"
     elif y_hat == 1:
         return "tvárný lom"
+    
+def infer_ensemble_CNN(X):
+    

@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 import matplotlib
 matplotlib.use("TkAgg")
 
-BATCH_SIZE = 32
+BATCH_SIZE = 4
 EPOCHS = 20
 
 SLICE_FACTOR = 4
@@ -52,18 +52,14 @@ train_dataset = train_dataset.shuffle(69).batch(BATCH_SIZE)
 test_dataset = test_dataset.shuffle(69).batch(BATCH_SIZE)
 
 model = keras.models.Sequential()
-model.add(keras.layers.Input(batch_size=BATCH_SIZE,shape=(480,640,1)))
-model.add(keras.layers.Conv2D(32, kernel_size=(5, 5), activation="relu"))
+model.add(keras.layers.Input(batch_size=BATCH_SIZE,shape=(120,160,1)))
+model.add(keras.layers.Conv2D(32, kernel_size=(3, 3), activation="relu"))
 model.add(keras.layers.MaxPooling2D(pool_size=(2, 2)))
-model.add(keras.layers.Conv2D(64, kernel_size=(5, 5), activation="relu"))
-model.add(keras.layers.MaxPooling2D(pool_size=(2, 2)))
-model.add(keras.layers.Conv2D(64, (3, 3), activation="relu"))
-model.add(keras.layers.MaxPooling2D(pool_size=(2, 2)))
-model.add(keras.layers.Conv2D(128, (3, 3), activation="relu"))
-model.add(keras.layers.MaxPooling2D(pool_size=(2, 2)))
-model.add(keras.layers.Conv2D(128, (3, 3), activation="relu"))
+model.add(keras.layers.Conv2D(32, kernel_size=(3, 3), activation="relu"))
 model.add(keras.layers.MaxPooling2D(pool_size=(2, 2)))
 model.add(keras.layers.Conv2D(64, (3, 3), activation="relu"))
+model.add(keras.layers.MaxPooling2D(pool_size=(2, 2)))
+model.add(keras.layers.Conv2D(32, (3, 3), activation="relu"))
 model.add(keras.layers.MaxPooling2D(pool_size=(2, 2)))
 
 model.add(keras.layers.Flatten())
