@@ -20,3 +20,12 @@ def infer_CNN(X):
 
     y_hat = model.predict(X)
     print(y_hat)
+    return round(y_hat)
+
+loader = Loader("dataset/test/stepnylom","dataset/test/tvarnylom")
+loader.generate_dataset(0)
+for i in range (10):
+    imag,label = loader.get(i,2)
+    print(label)
+    y_hat = infer_CNN(imag)
+    cv2.imwrite(f'test/{i}_{label}_{y_hat}.jpg',imag)
