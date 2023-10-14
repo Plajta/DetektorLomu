@@ -1,10 +1,9 @@
-from tkinter import ttk
 from tkinter import filedialog as fd
 from PIL import Image, ImageTk
-from tkinter import Tk
-from time import sleep
-import tkinter.font as font
+import customtkinter as ctk
 
+ctk.set_appearance_mode("System")  # Modes: system (default), light, dark
+ctk.set_default_color_theme("blue")  # Themes: blue (default), dark-blue, green
 
 def show_page(page_name):
     for frame in frames.values():
@@ -25,10 +24,10 @@ def select_file():
     if filename:
         imgloaded = Image.open(filename)
         resized_img = imgloaded.resize((400, 400))
-        img = ImageTk.PhotoImage(resized_img)
-        label.config(image=img)
+        img = ctk.CTkImage(resized_img, size=(400, 400)) #ImageTk.PhotoImage(resized_img)
+        label.configure(image=img)
         label.image = img
-        label2.config(image=img)
+        label2.configure(image=img)
         label2.image = img
         show_page("page1")
 
@@ -36,27 +35,27 @@ def select_file():
 
 
 def process_and_open_page2():
-    answerLablou.config(text="neni to lom je to hovno!")
+    answerLablou.configure(text="Lom")
     show_page("page2")
 
 
-root = Tk()
+root = ctk.CTk()
 root.resizable(width=False, height=False)
-root.title("Перехід між сторінками")
+root.title("Detektor lomů")
 root.geometry("420x500")
 
 frames = {
-    "main_page": ttk.Frame(root),
-    "page1": ttk.Frame(root),
-    "page2": ttk.Frame(root)
+    "main_page": ctk.CTkFrame(root),
+    "page1": ctk.CTkFrame(root),
+    "page2": ctk.CTkFrame(root)
 }
 
-answerLablou = ttk.Label(frames['page2'], text = "Ktery lom to je", font=("Arial", 25))
+answerLablou = ctk.CTkLabel(frames['page2'], text = "Ktery lom to je", font=("Arial", 25))
 # Main frame
-ButtonFont = font.Font(family='Arial')
-open_button = ttk.Button(
+ButtonFont = ctk.CTkFont(family='Arial')
+open_button = ctk.CTkButton(
     frames["main_page"],
-    text='Open an Image',
+    text='Otevřít obrázek',
     command=select_file
 )
 
@@ -64,18 +63,18 @@ open_button.pack(padx=160, pady=230)
 
 
 # Img frame
-label = ttk.Label(frames["page1"])
+label = ctk.CTkLabel(frames["page1"])
 label.pack()
-label2 = ttk.Label(frames["page2"])
+label2 = ctk.CTkLabel(frames["page2"])
 label2.pack()
 answerLablou.pack(pady = 20)
-process_button = ttk.Button(
+process_button = ctk.CTkButton(
     frames["page1"],
     text='Process',
     command=process_and_open_page2
 )
 process_button.pack(side="left", padx=5, pady=10)
-beck_button = ttk.Button(
+beck_button = ctk.CTkButton(
     frames["page1"],
     text='Back',
     command=lambda: show_page("main_page")
