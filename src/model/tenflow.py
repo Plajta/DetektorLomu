@@ -6,7 +6,7 @@ from wandb.keras import WandbMetricsLogger
 from keras.utils import plot_model
 
 BATCH_SIZE = 8
-EPOCHS = 2
+EPOCHS = 10
 
 wandb.init(
     # set the wandb project where this run will be logged
@@ -44,12 +44,27 @@ test_dataset = test_dataset.shuffle(8).batch(BATCH_SIZE)
 
 model = keras.models.Sequential()
 model.add(keras.layers.Input(batch_size=BATCH_SIZE,shape=(480,640,1)))
+model.add(keras.layers.Conv2D(32, kernel_size=(5, 5), activation="relu"))
+model.add(keras.layers.MaxPooling2D(pool_size=(2, 2)))
 model.add(keras.layers.Conv2D(64, kernel_size=(5, 5), activation="relu"))
 model.add(keras.layers.MaxPooling2D(pool_size=(2, 2)))
-model.add(keras.layers.Conv2D(128, kernel_size=(5, 5), activation="relu"))
+model.add(keras.layers.Conv2D(64, (3, 3), activation="relu"))
 model.add(keras.layers.MaxPooling2D(pool_size=(2, 2)))
+model.add(keras.layers.Conv2D(128, (3, 3), activation="relu"))
+model.add(keras.layers.MaxPooling2D(pool_size=(2, 2)))
+model.add(keras.layers.Conv2D(128, (3, 3), activation="relu"))
+model.add(keras.layers.MaxPooling2D(pool_size=(2, 2)))
+
 model.add(keras.layers.Flatten())
-model.add(keras.layers.Dropout(0.5))
+
+model.add(keras.layers.Dense(4096, activation="relu"))
+model.add(keras.layers.Dropout(0.2))
+model.add(keras.layers.Dense(2048, activation="relu"))
+model.add(keras.layers.Dense(512, activation="relu"))
+model.add(keras.layers.Dropout(0.2))
+model.add(keras.layers.Dense(128, activation="relu"))
+model.add(keras.layers.Dense(32, activation="relu"))
+model.add(keras.layers.Dropout(0.2))
 model.add(keras.layers.Dense(1, activation="sigmoid"))
 model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
 
