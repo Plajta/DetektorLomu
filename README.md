@@ -1,10 +1,11 @@
 # Lomy
 Binární klasifikace lomů (štěpný x tvárný)
 
-| Model       | Accuracy    |
-| ----------- | ----------- |
-| SVM (SVC)   | 79.83%      |
-| CNN         | 90%         |
+| Model       | Accuracy    | Ztráta      |
+| ----------- | ----------- | ----------- |
+| SVM (SVC)   | 79.83%      |             |
+| CNN         | 80%         | 0.42        |
+| KNN         | 79-84%      |             |
 
 Použité balíčky: 
     Aplikace:
