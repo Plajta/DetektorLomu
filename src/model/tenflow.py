@@ -1,27 +1,14 @@
 import tensorflow as tf
 from tensorflow import keras
 from process import Loader
-import wandb
 from wandb.keras import WandbMetricsLogger
 from keras.utils import plot_model
+import matplotlib.pyplot as plt
+import matplotlib
+matplotlib.use("TkAgg")
 
 BATCH_SIZE = 8
 EPOCHS = 10
-
-
-wandb.init(
-    # set the wandb project where this run will be logged
-    project="LomyDetection",
-
-    # track hyperparameters and run metadata with wandb.config
-    config={
-        "optimizer": "adam",
-        "loss": "binary_crossentropy",
-        "metric": "accuracy",
-        "epoch": EPOCHS,
-        "batch_size": BATCH_SIZE
-    }
-)
 
 
 print("Loading....")        
@@ -72,21 +59,30 @@ model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy']
 
 model.summary()
 
-history = model.fit(train_dataset, epochs=EPOCHS, use_multiprocessing=False, callbacks=[WandbMetricsLogger()])
+history = model.fit(train_dataset, epochs=EPOCHS, use_multiprocessing=False)
 
-model.evaluate(test_dataset, callbacks=[WandbMetricsLogger()])
+model.evaluate(test_dataset)
 
 model.save("src/model/saved/NeuralNet/cnn.keras")
 plot_model(model, to_file='model_plot.png', show_shapes=True, show_layer_names=True)
 
 print("model saved!")
 
-wandb.finish()
+# summarize history for accuracy
+plt.plot(history.history['accuracy'])
+plt.plot(history.history['val_accuracy'])
+plt.title('model accuracy')
+plt.ylabel('accuracy')
+plt.xlabel('epoch')
+plt.legend(['Train', 'Validation'], loc='upper left')
+plt.show()
+# summarize history for loss
+plt.plot(history.history['loss'])
+plt.plot(history.history['val_loss'])
+plt.title('model loss')
+plt.ylabel('loss')
+plt.xlabel('epoch')
+plt.legend(['Train', 'Validation'], loc='upper left')
+plt.show()
 
-# plt.figure(figsize=(10, 10))
-# for images, labels in train_dataset.take(1):
-#     for i in range(9):
-#         ax = plt.subplot(3, 3, i + 1)
-#         plt.imshow(images[i].numpy().astype("uint8"))
-#         plt.title(int(labels[i]))
-#         plt.axis("off")
+plt.show()
