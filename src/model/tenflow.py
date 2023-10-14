@@ -9,7 +9,6 @@ from keras.utils import plot_model
 BATCH_SIZE = 8
 EPOCHS = 20
 
-
 print("Loading....")        
 loader = Loader("dataset/lomy/stepnylom_jpg","dataset/lomy/tvarnylom_jpg")
 loader.randomize()
@@ -24,11 +23,17 @@ print("Loading done")
 test_x = [i[0]/255 for i in test_data]
 test_y = [i[1] for i in test_data]
 
-train_dataset = tf.data.Dataset.from_tensor_slices(([i[0]/255 for i in train_data], [i[1] for i in train_data]))
+train_x = [i[0]/255 for i in train_data]
+train_y = [i[1] for i in train_data]
+
+train_dataset = tf.data.Dataset.from_tensor_slices((train_x, train_y))
 test_dataset = tf.data.Dataset.from_tensor_slices((test_x, test_y))
 
 train_dataset = train_dataset.shuffle(69).batch(BATCH_SIZE)
 test_dataset = test_dataset.shuffle(69).batch(BATCH_SIZE)
+
+#Early stopping
+callback = tf.keras.callbacks.EarlyStopping(monitor='loss', patience=3)
 
 model = keras.models.Sequential()
 model.add(keras.layers.Input(batch_size=BATCH_SIZE,shape=(480,640,1)))
@@ -59,7 +64,8 @@ model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy']
 
 model.summary()
 
-history = model.fit(train_dataset, epochs=EPOCHS, use_multiprocessing=False, validation_data=test_dataset)
+history = model.fit(train_dataset, epochs=EPOCHS, use_multiprocessing=False, validation_data=test_dataset,
+                    callbacks=[callback])
 model.evaluate(test_dataset)
 
 model.save("src/model/saved/NeuralNet/cnn.keras")
