@@ -6,17 +6,20 @@ import matplotlib.pyplot as plt
 
 
 print("Loading....")        
-loader = Loader("dataset/test")
+loader = Loader("dataset/lomy/stepnylom_jpg","dataset/lomy/tvarnylom_jpg")
 
-loader.generate_dataset(round(loader.get_length()*0.8))
+#loader.generate_dataset(220)
 
-train_data = loader.get_array(1)
-test_data = loader.get_array(2)
+train_data = loader.get_array(0)[0:300]
+test_data = loader.get_array(0)[301:321]
 
 print("Loading done")
 
+test_x = [i[0]/255 for i in test_data]
+test_y = [i[1] for i in test_data]
+
 train_dataset = tf.data.Dataset.from_tensor_slices(([i[0]/255 for i in train_data], [i[1] for i in train_data]))
-test_dataset = tf.data.Dataset.from_tensor_slices(([i[0]/255 for i in test_data], [i[1] for i in test_data]))
+test_dataset = tf.data.Dataset.from_tensor_slices((test_x, test_y))
 
 BATCH_SIZE = 8
 
@@ -24,7 +27,7 @@ train_dataset = train_dataset.batch(BATCH_SIZE)
 test_dataset = test_dataset.batch(BATCH_SIZE)
 
 model = keras.models.Sequential()
-model.add(keras.layers.Input(batch_size=BATCH_SIZE,shape=(640,480,1)))
+model.add(keras.layers.Input(batch_size=BATCH_SIZE,shape=(480,640,1)))
 model.add(keras.layers.Conv2D(64, kernel_size=(5, 5), activation="relu"))
 model.add(keras.layers.MaxPooling2D(pool_size=(2, 2)))
 model.add(keras.layers.Conv2D(128, kernel_size=(5, 5), activation="relu"))
@@ -35,7 +38,9 @@ model.add(keras.layers.Dense(1, activation="sigmoid"))
 model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
 
 EPOCHS = 10
-history = model.fit(train_dataset, epochs=EPOCHS)
+history = model.fit(train_dataset, epochs=EPOCHS, use_multiprocessing=True)
+
+model.evaluate(test_dataset)
 
 # plt.figure(figsize=(10, 10))
 # for images, labels in train_dataset.take(1):
