@@ -1,8 +1,8 @@
-from tkinter import filedialog as fd
 from PIL import Image, ImageTk
 import customtkinter as ctk
+from customtkinter import filedialog as fd
 
-ctk.set_appearance_mode("System")  # Modes: system (default), light, dark
+ctk.set_appearance_mode("light")  # Modes: system (default), light, dark
 ctk.set_default_color_theme("blue")  # Themes: blue (default), dark-blue, green
 
 def show_page(page_name):
