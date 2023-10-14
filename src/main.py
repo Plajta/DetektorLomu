@@ -1,8 +1,14 @@
+from tkinter import filedialog as fd
 from PIL import Image, ImageTk
 import customtkinter as ctk
-from customtkinter import filedialog as fd
+import numpy as np
+import cv2
 
-ctk.set_appearance_mode("light")  # Modes: system (default), light, dark
+from model import inference
+
+selected_img = None
+
+ctk.set_appearance_mode("System")  # Modes: system (default), light, dark
 ctk.set_default_color_theme("blue")  # Themes: blue (default), dark-blue, green
 
 def show_page(page_name):
@@ -23,19 +29,29 @@ def select_file():
     
     if filename:
         imgloaded = Image.open(filename)
-        resized_img = imgloaded.resize((400, 400))
-        img = ctk.CTkImage(resized_img, size=(400, 400)) #ImageTk.PhotoImage(resized_img)
+        img = ctk.CTkImage(imgloaded, size=(400, 400)) #ImageTk.PhotoImage(resized_img)
         label.configure(image=img)
         label.image = img
         label2.configure(image=img)
         label2.image = img
+
+        global selected_img
+        selected_img = imgloaded
+
         show_page("page1")
 
+def process_and_open_page():
+    #run inference on neural net
+    img = np.array(selected_img)
+
+    img = np.resize(img, (480, 640, 3))
+    print(img.shape)
+
+    gray = cv2.cvtColor(img, cv2.COLOR_RGB2GRAY)
+    out = inference.infer_CNN(gray)
 
 
-
-def process_and_open_page2():
-    answerLablou.configure(text="Lom")
+    answerLablou.configure(text=out)
     show_page("page2")
 
 
@@ -63,26 +79,24 @@ open_button.pack(padx=160, pady=230)
 
 
 # Img frame
-label = ctk.CTkLabel(frames["page1"])
+label = ctk.CTkLabel(frames["page1"], text='')
 label.pack()
-label2 = ctk.CTkLabel(frames["page2"])
+label2 = ctk.CTkLabel(frames["page2"], text='')
 label2.pack()
 answerLablou.pack(pady = 20)
 process_button = ctk.CTkButton(
     frames["page1"],
     text='Process',
-    command=process_and_open_page2
+    command=process_and_open_page
 )
-process_button.pack(side="left", padx=5, pady=10)
+
 beck_button = ctk.CTkButton(
     frames["page1"],
     text='Back',
     command=lambda: show_page("main_page")
 )
 beck_button.pack(side="left", padx=5, pady=10)
-
+process_button.pack(side="right", padx=5, pady=10)
 show_page("main_page")
-
-
 
 root.mainloop()
