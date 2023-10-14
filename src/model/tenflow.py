@@ -35,10 +35,10 @@ model.add(keras.layers.MaxPooling2D(pool_size=(2, 2)))
 model.add(keras.layers.Flatten())
 model.add(keras.layers.Dropout(0.5))
 model.add(keras.layers.Dense(1, activation="sigmoid"))
-model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
+model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
 
 EPOCHS = 10
-history = model.fit(train_dataset, epochs=EPOCHS, use_multiprocessing=True)
+history = model.fit(train_dataset, epochs=EPOCHS, use_multiprocessing=False, validation_data=(test_x, test_y))
 
 model.evaluate(test_dataset)
 

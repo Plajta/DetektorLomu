@@ -1,1 +1,2 @@
 /src/SusikBusikAmongusik.pickle filter=lfs diff=lfs merge=lfs -text
+/src/model/saved/SVM/SVC.pickle filter=lfs diff=lfs merge=lfs -text
