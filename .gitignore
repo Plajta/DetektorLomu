@@ -2,9 +2,10 @@
 /dataset/*
 !/dataset/.gitkeep
 
-#dataset stuff
+#models
 /src/model/saved/*
 !/src/model/saved/.gitkeep
+!/src/model/saved/SVM
 
 env
 .idea

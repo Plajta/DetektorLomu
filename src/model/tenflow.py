@@ -1,8 +1,9 @@
 import tensorflow as tf
 from tensorflow import keras
-import numpy as np
 from process import Loader
-import matplotlib.pyplot as plt
+import wandb
+import wandb
+from wandb.keras import WandbMetricsLogger
 
 
 print("Loading....")        
@@ -37,11 +38,13 @@ model.add(keras.layers.Dropout(0.5))
 model.add(keras.layers.Dense(1, activation="sigmoid"))
 model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
 
-EPOCHS = 10
+EPOCHS = 2
+history = model.fit(train_dataset, epochs=EPOCHS, use_multiprocessing=False, callbacks=[WandbMetricsLogger()])
 
-history = model.fit(train_dataset, epochs=EPOCHS, use_multiprocessing=True, workers=10)
+model.evaluate(test_dataset, callbacks=[WandbMetricsLogger()])
 
-model.evaluate(test_dataset)
+model.save("src/model/saved/NeuralNet/cnn.keras")
+print("model saved!")
 
 # plt.figure(figsize=(10, 10))
 # for images, labels in train_dataset.take(1):
