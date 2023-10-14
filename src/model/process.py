@@ -103,7 +103,6 @@ class Loader:
             for y,j in enumerate(self.output):
                 self.training.append([j[i],y])
 
-
         random.shuffle(self.training)
 
         print(range(from_number,len(self.final_output[0])))
@@ -116,11 +115,6 @@ class Loader:
     def get_some_bitches(self):
         print("you? never")
 
-    
-
-
-
-
 if __name__ == "__main__":
     ld = Loader("dataset/lomy/stepnylom_jpg","dataset/lomy/tvarnylom_jpg")
     print(ld.get(6))
@@ -132,8 +126,9 @@ if __name__ == "__main__":
     cv2.imshow('Grayscale Image', ld.get(2)[0])
     print(ld.get_length())
     ld.randomize()
-    for i in range(4):
-        print(ld.get(i,2)[1])
+    for i in ld.get_array(1):
+        print(i[1])
+    cv2.imshow('Example Image', ld.get(5,1)[0])
 
     # Wait for a key event and close the windows
     cv2.waitKey(0)
