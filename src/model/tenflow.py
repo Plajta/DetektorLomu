@@ -25,11 +25,12 @@ wandb.init(
 
 print("Loading....")        
 loader = Loader("dataset/lomy/stepnylom_jpg","dataset/lomy/tvarnylom_jpg")
+loader.randomize()
 
-#loader.generate_dataset(220)
+loader.generate_dataset(500)
 
-train_data = loader.get_array(0)[0:500]
-test_data = loader.get_array(0)[501:521]
+train_data = loader.get_array(1)
+test_data = loader.get_array(2)
 
 print("Loading done")
 
