@@ -1,2 +1,3 @@
 /src/SusikBusikAmongusik.pickle filter=lfs diff=lfs merge=lfs -text
 /src/model/saved/SVM/SVC.pickle filter=lfs diff=lfs merge=lfs -text
+/src/model/saved/NeuralNet/cnn_unvalidated.keras filter=lfs diff=lfs merge=lfs -text
