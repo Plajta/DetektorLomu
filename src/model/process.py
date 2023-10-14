@@ -94,13 +94,6 @@ class Loader:
         print(len(self.output))
         print(len(self.output[0]))
 
-        my_array = np.array(self.output)
-
-        # Get the shape of the array
-        shape = my_array.shape
-        print("shape:")
-        print(shape)
-
         for i in range(from_number):
             for y,j in enumerate(self.output):
                 self.training.append([j[i],y])
