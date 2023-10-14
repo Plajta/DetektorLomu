@@ -1,13 +1,15 @@
 from tkinter import filedialog as fd
 from PIL import Image, ImageTk
 import customtkinter as ctk
+from model.process import Loader
 
 import numpy as np
 import cv2
-
 from model import inference
-
 selected_img = None
+
+ld = Loader()
+
 
 ctk.set_appearance_mode("System")  # Modes: system (default), light, dark
 ctk.set_default_color_theme("blue")  # Themes: blue (default), dark-blue, green
@@ -29,6 +31,7 @@ def select_file():
         filetypes=filetypes)
     
     if filename:
+        print(filename)
         imgloaded = Image.open(filename)
         img = ctk.CTkImage(imgloaded, size=(400, 400)) #ImageTk.PhotoImage(resized_img)
         label.configure(image=img)
@@ -37,21 +40,15 @@ def select_file():
         label2.image = img
 
         global selected_img
-        selected_img = imgloaded
+        selected_img = cv2.imread(filename)
 
         show_page("page1")
 
 def process_and_open_page():
-    #run inference on neural net
-    img = np.array(selected_img)
-
-    img = np.resize(img, (480, 640, 3))
-    print(img.shape)
-
-    gray = cv2.cvtColor(img, cv2.COLOR_RGB2GRAY)
-    out = inference.infer_CNN(gray)
-
-
+    # run inference on neural net
+    npimg = ld.resizing(selected_img)
+    print(npimg.shape)
+    out = inference.infer_CNN(npimg)
     answerLablou.configure(text=out)
     show_page("page2")
 
@@ -76,7 +73,7 @@ open_button = ctk.CTkButton(
     command=select_file
 )
 
-open_button.pack(padx=160, pady=230)
+open_button.pack(padx=130, pady=220)
 
 
 # Img frame

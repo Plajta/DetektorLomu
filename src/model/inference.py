@@ -25,3 +25,6 @@ def infer_CNN(X):
     
 def infer_ensemble_CNN(X):
     pass
+
+if __name__ == "__main__":
+    pass
