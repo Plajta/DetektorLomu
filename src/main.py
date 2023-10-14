@@ -64,7 +64,7 @@ frames = {
     "page2": ctk.CTkFrame(root)
 }
 
-answerLablou = ctk.CTkLabel(frames['page2'], text = "Ktery lom to je", font=("Arial", 25))
+answerLablou = ctk.CTkLabel(frames['page2'], text = "Ktery lom to je", font=("Arial", 25),  padx=20)
 # Main frame
 ButtonFont = ctk.CTkFont(family='Arial')
 open_button = ctk.CTkButton(
@@ -81,7 +81,7 @@ label = ctk.CTkLabel(frames["page1"], text='')
 label.pack()
 label2 = ctk.CTkLabel(frames["page2"], text='')
 label2.pack()
-answerLablou.pack(pady = 20)
+answerLablou.pack(side='right', pady = 20)
 process_button = ctk.CTkButton(
     frames["page1"],
     text='Process',
@@ -93,6 +93,12 @@ beck_button = ctk.CTkButton(
     text='Back',
     command=lambda: show_page("main_page")
 )
+beck_button1 = ctk.CTkButton(
+    frames["page2"],
+    text='Back',
+    command=lambda: show_page("main_page")
+)
+beck_button1.pack(side="left", padx=5, pady=10)
 beck_button.pack(side="left", padx=5, pady=10)
 process_button.pack(side="right", padx=5, pady=10)
 show_page("main_page")

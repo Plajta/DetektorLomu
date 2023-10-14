@@ -11,7 +11,7 @@ def infer_SVM(X):
     y_hat = model.predict(X)
 
 def infer_CNN(X):
-    model = keras.models.load_model('src/model/saved/NeuralNet/cnn_best.keras')
+    model = keras.models.load_model('src/model/saved/NeuralNet/cnn.keras')
 
     X = tf.expand_dims(X/255, axis=-1)
     X = tf.expand_dims(X, axis=0)
@@ -27,4 +27,4 @@ def infer_ensemble_CNN(X):
     pass
 
 if __name__ == "__main__":
-    pass
+    model = keras.models.load_model('src/model/saved/NeuralNet/cnn.keras')
