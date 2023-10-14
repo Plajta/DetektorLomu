@@ -2,6 +2,13 @@ from tkinter import filedialog as fd
 from PIL import Image, ImageTk
 import customtkinter as ctk
 
+import numpy as np
+import cv2
+
+from model import inference
+
+selected_img = None
+
 ctk.set_appearance_mode("System")  # Modes: system (default), light, dark
 ctk.set_default_color_theme("blue")  # Themes: blue (default), dark-blue, green
 
@@ -28,13 +35,24 @@ def select_file():
         label.image = img
         label2.configure(image=img)
         label2.image = img
+
+        global selected_img
+        selected_img = imgloaded
+
         show_page("page1")
 
+def process_and_open_page():
+    #run inference on neural net
+    img = np.array(selected_img)
+
+    img = np.resize(img, (480, 640, 3))
+    print(img.shape)
+
+    gray = cv2.cvtColor(img, cv2.COLOR_RGB2GRAY)
+    out = inference.infer_CNN(gray)
 
 
-
-def process_and_open_page2():
-    answerLablou.configure(text="Lom")
+    answerLablou.configure(text=out)
     show_page("page2")
 
 
@@ -70,7 +88,7 @@ answerLablou.pack(pady = 20)
 process_button = ctk.CTkButton(
     frames["page1"],
     text='Process',
-    command=process_and_open_page2
+    command=process_and_open_page
 )
 
 beck_button = ctk.CTkButton(
@@ -81,7 +99,5 @@ beck_button = ctk.CTkButton(
 beck_button.pack(side="left", padx=5, pady=10)
 process_button.pack(side="right", padx=5, pady=10)
 show_page("main_page")
-
-
 
 root.mainloop()

@@ -30,10 +30,10 @@ Link: https://drive.google.com/file/d/1k1I_AF1FbsyWtccinHeDZ2C5mzqOiktP/view?usp
 
 - [x] choose theme
 - [x] dataset preprocessing
-- [ ] dataset processing fix
+- [x] dataset processing fix
 - [ ] model
 - [ ] Data augmentation
 - [ ] Early stopping?
 - [ ] Grafy
 - [x] App na PC
-- [ ] Inference na apku
+- [x] Inference na apku
