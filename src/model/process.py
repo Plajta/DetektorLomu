@@ -52,10 +52,14 @@ class Loader:
             else:
                 print("Invalid directory path.")
 
-        #print(f"output len: {len(output)}")
-        #print(output)
-        return self.merge_and_randomize(self.output)
+        #print(f"output len: {len(self.output)}")
+        #print(self.output)
+        return self.output  #self.merge_and_randomize(self.output )
     
+    def returnJustAllArray(self):
+        return self.process
+
+
     def randomize(self):
         random.shuffle(self.final_output)
     
