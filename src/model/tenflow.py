@@ -38,7 +38,7 @@ model.add(keras.layers.Dense(1, activation="sigmoid"))
 model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
 
 EPOCHS = 10
-history = model.fit(train_dataset, epochs=EPOCHS, use_multiprocessing=False, validation_data=(test_x, test_y))
+history = model.fit(train_dataset, epochs=EPOCHS, use_multiprocessing=True, workers=10, validation_data=(test_x, test_y))
 
 model.evaluate(test_dataset)
 
