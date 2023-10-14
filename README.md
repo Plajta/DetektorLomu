@@ -36,4 +36,4 @@ Link: https://drive.google.com/file/d/1k1I_AF1FbsyWtccinHeDZ2C5mzqOiktP/view?usp
 - [ ] Early stopping?
 - [ ] Grafy
 - [x] App na PC
-- [ ] Inference na apku
+- [x] Inference na apku
