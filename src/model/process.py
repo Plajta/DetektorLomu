@@ -21,6 +21,19 @@ class Loader:
                 output.append([img,y])
                 
         return output
+    
+    def resizing(self,img):
+        img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+        left_corner = img[round(len(img)*0.88):round(len(img)),0:round(len(img[0])*0.15)]
+        right_corner = img[round(len(img)*0.88):round(len(img)),round(len(img[0])*0.85):round(len(img[0]))]
+        if (np.sum((left_corner<20)) >= 500 or np.sum((right_corner<20)) >= 500): img = img[0:round(len(img)*0.88),:]
+        for num, line in enumerate(img[round(len(img)*0.8):len(img)]):
+            if sum(line>=200)>50:
+                img = img[0:round(len(img)*0.8)+num-30]
+                break
+        # ořezávání
+        img = cv2.resize(img, self.resize)
+        return img
 
     def process(self):
         for i,folder_path in enumerate(self.dir_paths):
@@ -29,18 +42,8 @@ class Loader:
                 for filename in os.listdir(folder_path):
                     if filename.endswith(('.jpg', '.jpeg', '.png')):
                         img = cv2.imread(os.path.join(folder_path, filename))
-                        img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-
-                        left_corner = img[round(len(img)*0.88):round(len(img)),0:round(len(img[0])*0.15)]
-                        right_corner = img[round(len(img)*0.88):round(len(img)),round(len(img[0])*0.85):round(len(img[0]))]
-                        if (np.sum((left_corner<20)) >= 500 or np.sum((right_corner<20)) >= 500): img = img[0:round(len(img)*0.88),:]
-                        for num, line in enumerate(img[round(len(img)*0.8):len(img)]):
-                            if sum(line>=200)>50:
-                                img = img[0:round(len(img)*0.8)+num-30]
-                                break
-                        # ořezávání
-
-                        img = cv2.resize(img, self.resize)
+                        img = self.resizing(img)
+                        
                         self.output[i].append(img)
 
                 if self.output[i]:
@@ -54,7 +57,7 @@ class Loader:
 
         #print(f"output len: {len(self.output)}")
         #print(self.output)
-        return self.merge_and_randomize(self.output )
+        return self.merge_and_randomize(self.output)
     
 
 
@@ -133,7 +136,19 @@ if __name__ == "__main__":
     print(f"jed: {jed} nul: {nul}")
     cv2.imshow('Example Image', ld.get(5,1)[0])
 
-    # Wait for a key event and close the windows
+    for set in ld.get_array(1):
+
+        cv2.imshow('Image', set[0])
+
+
+        key = cv2.waitKey(0)
+
+        if key == 13:
+            continue
+
+        else:
+            break
+
     cv2.waitKey(0)
     cv2.destroyAllWindows()
 
