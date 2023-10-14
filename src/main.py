@@ -25,15 +25,29 @@ def show_page(page_name):
 def process_and_open_page():
     # run inference on neural net
     match combobox.get():
-        case "option 1":
+        case "CNN":
             npimg = ld.resizing(selected_img)
             print(npimg.shape)
             out = inference.infer_CNN(npimg)
             answerLablou.configure(text=out)
             show_page("page2")
-        case "option 2":
+        case "KNNh":
+            npimg = ld.resizing(selected_img)
+            print(npimg.shape)
+            out = inference.infer_KNN_hist(npimg)
+            answerLablou.configure(text=out)
             show_page("page2")
-        case "option 3":
+        case "KNNr":
+            npimg = ld.resizing(selected_img)
+            print(npimg.shape)
+            out = inference.infer_KNN_raw(npimg)
+            answerLablou.configure(text=out)
+            show_page("page2")
+        case "SVM":
+            npimg = ld.resizing(selected_img)
+            print(npimg.shape)
+            out = inference.infer_SVM(npimg)
+            answerLablou.configure(text=out)
             show_page("page2")
         
 
@@ -85,25 +99,6 @@ def select_file():
 
         show_page("page1")
 
-def process_and_open_page():
-    # run inference on neural net
-    npimg = ld.resizing(selected_img)
-    print(npimg.shape)
-    out = inference.infer_KNN_hist(npimg)
-    answerLablou.configure(text=out)
-    show_page("page2")
-
-
-root = ctk.CTk()
-root.resizable(width=False, height=False)
-root.title("Detektor lomů")
-root.geometry("420x500")
-
-frames = {
-    "main_page": ctk.CTkFrame(root),
-    "page1": ctk.CTkFrame(root),
-    "page2": ctk.CTkFrame(root)
-}
 
 answerLablou = ctk.CTkLabel(frames['page2'], text = "Ktery lom to je", font=("Arial", 25),  padx=20)
 # Main frame
@@ -127,10 +122,10 @@ def combobox_callback(choice):
     print("combobox dropdown clicked:", choice)
 
 combobox = ctk.CTkComboBox(master=frames['main_page'],
-                                     values=["option 1", "option 2", "option 3"],
+                                     values=["CNN", "KNNh", "KNNr", "SVM"],
                                      command=combobox_callback)
 combobox.pack(side="top")
-combobox.set("option 1")  # set initial value
+combobox.set("CNN")  # set initial value
 
 
 next_button.pack(pady=10)

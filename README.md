@@ -3,9 +3,10 @@ Binární klasifikace lomů (štěpný x tvárný)
 
 | Model       | Accuracy    |
 | ----------- | ----------- |
-| SVM (SVC)   | 79.83%      |
-| CNN         | 80%         |
-| KNN         | 79-84%      |
+| SVM (SVC)   | 79.8%      |
+| CNN         | 85%         |
+| KNN hist    | 82%         |
+| KNN raw     | 74%         |
 
 Použité balíčky: 
     Aplikace:
@@ -37,3 +38,4 @@ Link: https://drive.google.com/file/d/1k1I_AF1FbsyWtccinHeDZ2C5mzqOiktP/view?usp
 - [ ] Grafy
 - [x] App na PC
 - [x] Inference na apku
+- [ ] Ensemble CNN
