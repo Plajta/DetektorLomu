@@ -23,5 +23,5 @@ def infer_CNN(X):
     elif y_hat == 1:
         return "tvárný lom"
     
-def infer_ensemble_CNN(X):
-    
+if __name__ == "__main__":
+    infer_CNN(0.0)
