@@ -1,6 +1,7 @@
 import tensorflow as tf
 from tensorflow import keras
 from process import Loader
+from wandb.keras import WandbMetricsLogger
 from keras.utils import plot_model
 import matplotlib.pyplot as plt
 import matplotlib
@@ -68,8 +69,6 @@ plot_model(model, to_file='model_plot.png', show_shapes=True, show_layer_names=T
 
 print("model saved!")
 
-plt.rcParams["figure.figsize"] = [12,4]
-figure, axis = plt.subplots(1, 2)
 
 axis[0].plot(history.history['loss'], label='loss- training data')
 #axis[0].plot(history.history['val_accuracy'], label='accuracy - validating data')
