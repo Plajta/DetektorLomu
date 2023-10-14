@@ -5,7 +5,7 @@ from process import Loader
 ld = Loader("/home/andry/HACKHAHAHAHAH/plajta/dataset/lomy/stepnylom_jpg", "/home/andry/HACKHAHAHAHAH/plajta/dataset/lomy/tvarnylom_jpg")
 
 # Завантажте модель
-model = keras.models.load_model('plajta/src/model/my_model.keras')
+reconstructed_model = keras.models.load_model('plajta/src/model/my_model.keras')
 
 for i in range(ld.get_length()):
     img, label = ld.get(i)  # Get image and label from Loader
@@ -15,8 +15,5 @@ for i in range(ld.get_length()):
 
     datatoload = np.array(data)
 
-    predictions = model.predict(datatoload)
-    # Визначте клас з найвищою ймовірністю
-    predicted_class = np.argmax(predictions)
-
-    print("result:", predicted_class)
+    reconstructed_model.predict(datatoload)
+    reconstructed_model.enavulate()

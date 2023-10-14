@@ -1,6 +1,7 @@
 import tensorflow as tf
 from tensorflow import keras
 from process import Loader
+from wandb.keras import WandbMetricsLogger
 from keras.utils import plot_model
 import matplotlib.pyplot as plt
 import matplotlib
@@ -67,21 +68,21 @@ plot_model(model, to_file='model_plot.png', show_shapes=True, show_layer_names=T
 
 print("model saved!")
 
-plt.rcParams["figure.figsize"] = [12,4]
-figure, axis = plt.subplots(1, 2)
-
-axis[0].plot(history.history['loss'], label='loss- training data')
-#axis[0].plot(history.history['val_accuracy'], label='accuracy - validating data')
-axis[0].grid()
-axis[0].set_title('Loss')
-axis[0].legend()
-
-
-
-axis[1].plot(history.history['accuracy'], label='accuracy - training data')
-#axis[0].plot(history.history['val_accuracy'], label='accuracy - validating data')
-axis[1].grid()
-axis[1].set_title('Accuracy')
-axis[1].legend()
+# summarize history for accuracy
+plt.plot(history.history['accuracy'])
+plt.plot(history.history['val_accuracy'])
+plt.title('model accuracy')
+plt.ylabel('accuracy')
+plt.xlabel('epoch')
+plt.legend(['Train', 'Validation'], loc='upper left')
+plt.show()
+# summarize history for loss
+plt.plot(history.history['loss'])
+plt.plot(history.history['val_loss'])
+plt.title('model loss')
+plt.ylabel('loss')
+plt.xlabel('epoch')
+plt.legend(['Train', 'Validation'], loc='upper left')
+plt.show()
 
 plt.show()
