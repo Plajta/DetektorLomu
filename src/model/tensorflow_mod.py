@@ -9,6 +9,7 @@ matplotlib.use("TkAgg")
 BATCH_SIZE = 32
 EPOCHS = 20
 
+SLICE_FACTOR = 4
 
 print("Loading....")        
 loader = Loader("dataset/lomy/stepnylom_jpg","dataset/lomy/tvarnylom_jpg")
@@ -26,15 +27,22 @@ test_y = [i[1] for i in test_data]
 train_x = [i[0]/255 for i in train_data]
 train_y = [i[1] for i in train_data]
 
-print(train_x)
+mod_train_x = []
+mod_train_y = []
+
+mod_test_x = []
+mod_test_y = []
 
 #reformat to ensemble
 for i in range(len(train_x)):
-    pass
+    for i_y in range(4):
+        for i_x in range(4):
+            img = train_x[i]
 
 for i in range(len(test_x)):
-    pass
-
+    for i_y in range(4):
+        for i_x in range(4):
+            pass
 
 train_dataset = tf.data.Dataset.from_tensor_slices((train_x, train_y))
 test_dataset = tf.data.Dataset.from_tensor_slices((test_x, test_y))
