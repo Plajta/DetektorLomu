@@ -9,8 +9,11 @@ ld = Loader("/home/andry/HACKHAHAHAHAH/plajta/dataset/lomy/stepnylom_jpg", "/hom
 howmanydata = 60
 
 #for i in ld.get_length:
-
-print(ld.get_length)
+print(ld.get_length())
+ret,thresh1 = cv2.threshold(ld.get(0)[0],127,255,cv2.THRESH_BINARY)
+cv2.imshow("test", thresh1)
+print(ld.get(0)[1])
+cv2.waitKey(0)
 
 # y_tr = np.array(trainData[1])
 # y_test = np.array(testData[1])

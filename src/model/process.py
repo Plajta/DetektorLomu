@@ -54,10 +54,8 @@ class Loader:
 
         #print(f"output len: {len(self.output)}")
         #print(self.output)
-        return self.output  #self.merge_and_randomize(self.output )
+        return self.merge_and_randomize(self.output )
     
-    def returnJustAllArray(self):
-        return self.process
 
 
     def randomize(self):
