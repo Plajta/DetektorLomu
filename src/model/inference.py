@@ -1,6 +1,22 @@
-import torch
-import model
+import pickle
+import tensorflow as tf
+from tensorflow import keras
+from process import Loader
+import cv2
 
-model = torch.load("/src/model/saved/ConvNeuralNet9.pth")
-model.eval()
+def infer_SVM(X):
+    # load model
+    model = pickle.load(open("/saved/SVM/SVC.pickle", "rb"))
 
+    # you can use loaded model to compute predictions
+    y_hat = model.predict(X)
+    print(y_hat)
+
+def infer_CNN(X):
+    model = keras.models.load_model('src/model/saved/NeuralNet/cnn.keras')
+
+    X = tf.expand_dims(X/255, axis=-1)
+    X = tf.expand_dims(X, axis=0)
+
+    y_hat = model.predict(X)
+    print(y_hat)
