@@ -28,8 +28,8 @@ loader = Loader("dataset/lomy/stepnylom_jpg","dataset/lomy/tvarnylom_jpg")
 
 #loader.generate_dataset(220)
 
-train_data = loader.get_array(0)[0:300]
-test_data = loader.get_array(0)[301:321]
+train_data = loader.get_array(0)[0:500]
+test_data = loader.get_array(0)[501:521]
 
 print("Loading done")
 
@@ -39,8 +39,8 @@ test_y = [i[1] for i in test_data]
 train_dataset = tf.data.Dataset.from_tensor_slices(([i[0]/255 for i in train_data], [i[1] for i in train_data]))
 test_dataset = tf.data.Dataset.from_tensor_slices((test_x, test_y))
 
-train_dataset = train_dataset.batch(BATCH_SIZE)
-test_dataset = test_dataset.batch(BATCH_SIZE)
+train_dataset = train_dataset.shuffle(8).batch(BATCH_SIZE)
+test_dataset = test_dataset.shuffle(8).batch(BATCH_SIZE)
 
 model = keras.models.Sequential()
 model.add(keras.layers.Input(batch_size=BATCH_SIZE,shape=(480,640,1)))
