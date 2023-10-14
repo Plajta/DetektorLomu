@@ -8,8 +8,17 @@ import torch
 import numpy as np
 
 import torchvision.transforms as transforms
+from torchvision.transforms import v2
+
 transform = transforms.Compose([
     transforms.ToTensor()
+])
+
+data_augmentation = v2.Compose([
+    v2.RandomHorizontalFlip(p=0.5),
+    v2.RandomVerticalFlip(p=0.5),
+    v2.RandomAdjustSharpness(sharpness_factor=2),
+    v2.RandomEqualize()
 ])
 
 class LomyDataset(Dataset):
@@ -18,8 +27,10 @@ class LomyDataset(Dataset):
         self.loader = Loader("dataset/lomy/stepnylom_jpg", "dataset/lomy/tvarnylom_jpg")
     
     def __getitem__(self, idx):
-        data = self.loader.get(idx).copy()
-        return ImgTransform(data[0], "torch"), torch.tensor(data[1]) #X, y
+        data = self.loader.get(idx)
+        img_data = ImgTransform(data[0], "torch")
+
+        return img_data, torch.tensor(data[1]) #X, y
     
     def __len__(self):
         return self.loader.get_length()
@@ -77,3 +88,4 @@ if __name__ == "__main__":
     #run neural networks
     net = ConvNeuralNet()
     net.run(train_data, test_data)
+    pass

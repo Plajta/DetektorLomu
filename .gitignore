@@ -2,11 +2,14 @@
 /dataset/*
 !/dataset/.gitkeep
 
-#dataset stuff
+#models
 /src/model/saved/*
 !/src/model/saved/.gitkeep
+!/src/model/saved/SVM
+!/src/model/saved/KNN
 
 env
 .idea
 
-src/model/__pycache__
+/src/model/__pycache__/
+/wandb/
