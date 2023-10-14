@@ -2,9 +2,9 @@ import tensorflow as tf
 from tensorflow import keras
 from process import Loader
 from keras.utils import plot_model
-import matplotlib.pyplot as plt
-import matplotlib
-matplotlib.use("TkAgg")
+#import matplotlib.pyplot as plt
+#import matplotlib
+#matplotlib.use("TkAgg")
 
 BATCH_SIZE = 8
 EPOCHS = 20
@@ -63,25 +63,25 @@ history = model.fit(train_dataset, epochs=EPOCHS, use_multiprocessing=False, val
 model.evaluate(test_dataset)
 
 model.save("src/model/saved/NeuralNet/cnn.keras")
-plot_model(model, to_file='model_plot.png', show_shapes=True, show_layer_names=True)
+# plot_model(model, to_file='model_plot.png', show_shapes=True, show_layer_names=True)
 
 print("model saved!")
 
 # summarize history for accuracy
-plt.plot(history.history['accuracy'])
-plt.plot(history.history['val_accuracy'])
-plt.title('model accuracy')
-plt.ylabel('accuracy')
-plt.xlabel('epoch')
-plt.legend(['Train', 'Validation'], loc='upper left')
-plt.show()
+# plt.plot(history.history['accuracy'])
+# plt.plot(history.history['val_accuracy'])
+# plt.title('model accuracy')
+# plt.ylabel('accuracy')
+# plt.xlabel('epoch')
+# plt.legend(['Train', 'Validation'], loc='upper left')
+# plt.show()
 # summarize history for loss
-plt.plot(history.history['loss'])
-plt.plot(history.history['val_loss'])
-plt.title('model loss')
-plt.ylabel('loss')
-plt.xlabel('epoch')
-plt.legend(['Train', 'Validation'], loc='upper left')
-plt.show()
+# plt.plot(history.history['loss'])
+# plt.plot(history.history['val_loss'])
+# plt.title('model loss')
+# plt.ylabel('loss')
+# plt.xlabel('epoch')
+# plt.legend(['Train', 'Validation'], loc='upper left')
+# plt.show()
 
-plt.show()
+# plt.show()
