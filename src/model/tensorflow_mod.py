@@ -38,11 +38,12 @@ for i in range(len(train_x)):
     for i_y in range(4):
         for i_x in range(4):
             img = train_x[i]
+            #TODO pro tebe
 
 for i in range(len(test_x)):
     for i_y in range(4):
         for i_x in range(4):
-            pass
+            pass #TODO pro tebe
 
 train_dataset = tf.data.Dataset.from_tensor_slices((train_x, train_y))
 test_dataset = tf.data.Dataset.from_tensor_slices((test_x, test_y))
