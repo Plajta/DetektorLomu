@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 import matplotlib
 matplotlib.use("TkAgg")
 
-BATCH_SIZE = 8
+BATCH_SIZE = 32
 EPOCHS = 20
 
 
@@ -23,7 +23,20 @@ print("Loading done")
 test_x = [i[0]/255 for i in test_data]
 test_y = [i[1] for i in test_data]
 
-train_dataset = tf.data.Dataset.from_tensor_slices(([i[0]/255 for i in train_data], [i[1] for i in train_data]))
+train_x = [i[0]/255 for i in train_data]
+train_y = [i[1] for i in train_data]
+
+print(train_x)
+
+#reformat to ensemble
+for i in range(len(train_x)):
+    pass
+
+for i in range(len(test_x)):
+    pass
+
+
+train_dataset = tf.data.Dataset.from_tensor_slices((train_x, train_y))
 test_dataset = tf.data.Dataset.from_tensor_slices((test_x, test_y))
 
 train_dataset = train_dataset.shuffle(69).batch(BATCH_SIZE)
