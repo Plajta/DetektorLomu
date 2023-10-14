@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 import matplotlib
 matplotlib.use("TkAgg")
 
-BATCH_SIZE = 4
+BATCH_SIZE = 32
 EPOCHS = 20
 
 SLICE_FACTOR = 4
@@ -27,12 +27,6 @@ test_y = [i[1] for i in test_data]
 train_x = [i[0]/255 for i in train_data]
 train_y = [i[1] for i in train_data]
 
-mod_train_x = []
-mod_train_y = []
-
-mod_test_x = []
-mod_test_y = []
-
 fraction_train_x = []
 fraction_train_y = []
 
@@ -46,7 +40,7 @@ num_cols = 4
 
 for i in range(len(train_x)):
     img = train_x[i]
-    height, width, channels = img.shape
+    height, width = img.shape
 
     sub_img_height = height // num_rows
     sub_img_width = width // num_cols
@@ -65,7 +59,7 @@ for i in range(len(train_x)):
 
 for i in range(len(test_x)):
     img = test_x[i]
-    height, width, channels = img.shape
+    height, width = img.shape
 
     sub_img_height = height // num_rows
     sub_img_width = width // num_cols
@@ -82,8 +76,11 @@ for i in range(len(test_x)):
             fraction_test_x.append(sub_image)
             fraction_test_y.append(test_y[i])
 
-train_dataset = tf.data.Dataset.from_tensor_slices((train_x, train_y))
-test_dataset = tf.data.Dataset.from_tensor_slices((test_x, test_y))
+print(len(fraction_test_x))
+print(len(fraction_train_x))
+
+train_dataset = tf.data.Dataset.from_tensor_slices((fraction_train_x, fraction_train_y))
+test_dataset = tf.data.Dataset.from_tensor_slices((fraction_test_x, fraction_test_y))
 
 train_dataset = train_dataset.shuffle(69).batch(BATCH_SIZE)
 test_dataset = test_dataset.shuffle(69).batch(BATCH_SIZE)
@@ -116,7 +113,7 @@ model.summary()
 history = model.fit(train_dataset, epochs=EPOCHS, use_multiprocessing=False, validation_data=test_dataset)
 model.evaluate(test_dataset)
 
-model.save("src/model/saved/NeuralNet/cnn.keras")
+model.save("src/model/saved/NeuralNet/cnn_small.keras")
 plot_model(model, to_file='model_plot.png', show_shapes=True, show_layer_names=True)
 
 print("model saved!")
