@@ -83,4 +83,4 @@ def infer_ensemble_CNN(X):
     pass
 
 if __name__ == "__main__":
-    model = keras.models.load_model('src/model/saved/NeuralNet/cnn.keras')
+    model = keras.models.load_model('src/model/saved/NeuralNet/cnn_best.keras')

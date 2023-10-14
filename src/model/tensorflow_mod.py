@@ -4,9 +4,10 @@ from process import Loader
 from keras.utils import plot_model
 import matplotlib.pyplot as plt
 import matplotlib
+import cv2
 matplotlib.use("TkAgg")
 
-BATCH_SIZE = 32
+BATCH_SIZE = 16
 EPOCHS = 20
 
 SLICE_FACTOR = 4
@@ -76,9 +77,6 @@ for i in range(len(test_x)):
             fraction_test_x.append(sub_image)
             fraction_test_y.append(test_y[i])
 
-print(len(fraction_test_x))
-print(len(fraction_train_x))
-
 train_dataset = tf.data.Dataset.from_tensor_slices((fraction_train_x, fraction_train_y))
 test_dataset = tf.data.Dataset.from_tensor_slices((fraction_test_x, fraction_test_y))
 
@@ -87,26 +85,33 @@ test_dataset = test_dataset.shuffle(69).batch(BATCH_SIZE)
 
 model = keras.models.Sequential()
 model.add(keras.layers.Input(batch_size=BATCH_SIZE,shape=(120,160,1)))
+
 model.add(keras.layers.Conv2D(32, kernel_size=(3, 3), activation="relu"))
 model.add(keras.layers.MaxPooling2D(pool_size=(2, 2)))
+
 model.add(keras.layers.Conv2D(32, kernel_size=(3, 3), activation="relu"))
 model.add(keras.layers.MaxPooling2D(pool_size=(2, 2)))
+
 model.add(keras.layers.Conv2D(64, (3, 3), activation="relu"))
 model.add(keras.layers.MaxPooling2D(pool_size=(2, 2)))
+
 model.add(keras.layers.Conv2D(32, (3, 3), activation="relu"))
+model.add(keras.layers.MaxPooling2D(pool_size=(2, 2)))
+
+model.add(keras.layers.Conv2D(16, (3, 3), activation="relu"))
 model.add(keras.layers.MaxPooling2D(pool_size=(2, 2)))
 
 model.add(keras.layers.Flatten())
 
-model.add(keras.layers.Dense(1024, activation="relu"))
-model.add(tf.keras.layers.BatchNormalization())
-
-model.add(keras.layers.Dense(256, activation="relu"))
+model.add(keras.layers.Dense(128, activation="relu"))
 model.add(tf.keras.layers.BatchNormalization())
 model.add(keras.layers.Dropout(0.2))
 
+model.add(keras.layers.Dense(32, activation="relu"))
+model.add(tf.keras.layers.BatchNormalization())
+
 model.add(keras.layers.Dense(1, activation="sigmoid"))
-model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
+model.compile(loss='binary_crossentropy', optimizer='SGD', metrics=['accuracy'])
 
 model.summary()
 

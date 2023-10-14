@@ -2,8 +2,10 @@ import tensorflow as tf
 from tensorflow import keras
 from process import Loader
 from keras.utils import plot_model
+from sklearn.metrics import confusion_matrix
 import matplotlib.pyplot as plt
 import matplotlib
+import numpy as np
 matplotlib.use("TkAgg")
 
 BATCH_SIZE = 8
@@ -68,7 +70,7 @@ history = model.fit(train_dataset, epochs=EPOCHS, use_multiprocessing=False, val
 model.evaluate(test_dataset)
 
 model.save("src/model/saved/NeuralNet/cnn.keras")
-plot_model(model, to_file='model_plot.png', show_shapes=True, show_layer_names=True)
+#plot_model(model, to_file='model_plot.png', show_shapes=True, show_layer_names=True)
 
 print("model saved!")
 
