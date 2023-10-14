@@ -48,7 +48,7 @@ def process_and_open_page():
     # run inference on neural net
     npimg = ld.resizing(selected_img)
     print(npimg.shape)
-    out = inference.infer_CNN(npimg)
+    out = inference.infer_SVM(npimg)
     answerLablou.configure(text=out)
     show_page("page2")
 
