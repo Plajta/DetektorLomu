@@ -6,6 +6,7 @@
 /src/model/saved/*
 !/src/model/saved/.gitkeep
 !/src/model/saved/SVM
+!/src/model/saved/KNN
 
 env
 .idea
