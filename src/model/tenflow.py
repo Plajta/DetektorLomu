@@ -32,8 +32,10 @@ test_dataset = tf.data.Dataset.from_tensor_slices((test_x, test_y))
 train_dataset = train_dataset.shuffle(69).batch(BATCH_SIZE)
 test_dataset = test_dataset.shuffle(69).batch(BATCH_SIZE)
 
-#Early stopping
-callback = tf.keras.callbacks.EarlyStopping(monitor='loss', patience=3)
+#Tensorflow callbacks
+filepath = "src/model/saved/NeuralNet/checkpoints/cnn-checkpoint-{epoch:02d}-{val_accuracy:.2f}.keras"
+checkpoint_save = tf.keras.callbacks.ModelCheckpoint(filepath, save_weights_only=False, verbose=1, mode='auto', period=1)
+early_stopping = tf.keras.callbacks.EarlyStopping(monitor='val_loss', patience=3)
 
 model = keras.models.Sequential()
 model.add(keras.layers.Input(batch_size=BATCH_SIZE,shape=(480,640,1)))
@@ -65,7 +67,7 @@ model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy']
 model.summary()
 
 history = model.fit(train_dataset, epochs=EPOCHS, use_multiprocessing=False, validation_data=test_dataset,
-                    callbacks=[callback])
+                    callbacks=[checkpoint_save,early_stopping])
 model.evaluate(test_dataset)
 
 model.save("src/model/saved/NeuralNet/cnn.keras")

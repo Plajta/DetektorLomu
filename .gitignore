@@ -8,6 +8,7 @@
 !/src/model/saved/SVM
 !/src/model/saved/KNN
 !/src/model/saved/NeuralNet
+src/model/saved/NeuralNet/checkpoints
 
 env
 .idea
