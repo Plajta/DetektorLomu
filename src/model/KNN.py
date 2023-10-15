@@ -6,7 +6,7 @@ from sklearn.metrics import accuracy_score
 from sklearn.metrics import classification_report
 import pickle
 import cv2
-from model.process import Loader
+from processing import Loader
 
 
 Categories = ['stepnylom_jpg', 'tvarnylom_jpg']

@@ -1,7 +1,7 @@
 import cv2
 import numpy as np
 from tensorflow import keras
-from process import Loader
+from processing import Loader
 ld = Loader("/home/andry/HACKHAHAHAHAH/plajta/dataset/lomy/stepnylom_jpg", "/home/andry/HACKHAHAHAHAH/plajta/dataset/lomy/tvarnylom_jpg")
 
 # Завантажте модель

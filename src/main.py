@@ -1,7 +1,7 @@
 from tkinter import filedialog as fd
 from PIL import Image, ImageTk
 import customtkinter as ctk
-from model.process import Loader
+from model.processing import Loader
 import os
 import numpy as np
 import cv2
