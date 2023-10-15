@@ -152,18 +152,18 @@ process_button = ctk.CTkButton(
     command=process_and_open_page
 )
 
-beck_button = ctk.CTkButton(
+back_button = ctk.CTkButton(
     frames["page1"],
     text='Back',
     command=lambda: show_page("main_page")
 )
-beck_button1 = ctk.CTkButton(
+back_button1 = ctk.CTkButton(
     frames["page2"],
     text='Back',
     command=lambda: show_page("main_page")
 )
-beck_button1.pack(side="left", padx=5, pady=10)
-beck_button.pack(side="left", padx=5, pady=10)
+back_button1.pack(side="left", padx=5, pady=10)
+back_button.pack(side="left", padx=5, pady=10)
 process_button.pack(side="right", padx=5, pady=10)
 show_page("main_page")
 
