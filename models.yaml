@@ -1,0 +1,9 @@
+CNN:
+- cnn.keras
+- cnn_best.keras
+KNNh:
+- KNNh.pickle
+KNNr:
+- KNNr.pickle
+SVM:
+- SVC.pickle

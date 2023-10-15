@@ -6,9 +6,12 @@ import os
 import numpy as np
 import cv2
 from model import inference
+import yaml
 selected_img = None
 
 ld = Loader()
+
+selected_method = ""
 
 open_button = None
 
@@ -26,7 +29,7 @@ def process_and_open_page():
     # run inference on neural net
     npimg = ld.resizing(selected_img)
     print(npimg.shape)
-    match combobox.get():
+    match method_box.get():
         case "CNN":
             out = inference.infer_CNN(npimg)
         case "KNNh":
@@ -38,7 +41,11 @@ def process_and_open_page():
     answerLablou.configure(text=out)
     show_page("page2")
     
-
+with open('models.yaml') as file:
+    models = yaml.load(file,Loader=yaml.Loader)
+    if len(models) is 0:
+        quit()
+    
 
 root = ctk.CTk()
 root.resizable(width=False, height=False)
@@ -100,23 +107,34 @@ open_button = ctk.CTkButton(
     command=select_file
 )
 
-
-
 open_button.pack(padx=130, pady=10)
 
+def method_box_callback(choice):
+    picked_method = choice
+    print(models[choice])
+    model_box.configure(values=models[choice])
+    model_box.set(models[choice][0])
+
+def model_box_callback(choice):
+    print("model box dropdown clicked:", choice)
+
+method_box = ctk.CTkComboBox(master=frames['main_page'],
+                                     values=list(models),
+                                     command=method_box_callback)
+method_box.pack(side="top")
+method_box.set(list(models)[0]) 
+
+model_box = ctk.CTkComboBox(master=frames['main_page'],
+                                     values=models[list(models)[0]],
+                                     command=model_box_callback)
+model_box.pack(side="top", pady=10)
+model_box.set(models[list(models)[0]][0])
 
 
-def combobox_callback(choice):
-    print("combobox dropdown clicked:", choice)
+method_box_callback(list(models)[0])
+model_box_callback(models[list(models)[0]][0])
 
-combobox = ctk.CTkComboBox(master=frames['main_page'],
-                                     values=["CNN", "KNNh", "KNNr", "SVM"],
-                                     command=combobox_callback)
-combobox.pack(side="top")
-combobox.set("CNN")  # set initial value
-
-
-next_button.pack(pady=10)
+next_button.pack()
 
 emtrylabel = ctk.CTkLabel(frames["main_page"], text='')
 emtrylabel.pack(pady=85)
