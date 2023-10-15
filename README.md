@@ -8,7 +8,7 @@ Binární klasifikace lomů (štěpný x tvárný)
 | KNN hist    | 82%         |
 | KNN raw     | 74%         |
 
-### Instalace:
+### Instalace
 1. Repozitář obsahuje velké soubory spravované `git lfs`
 
 	```
@@ -19,6 +19,13 @@ Binární klasifikace lomů (štěpný x tvárný)
 	```
 	pip install -r requirements.txt
 	```
+
+### Troubleshooting
+Pokud máte problémy s načítáním modelů
+
+```
+git lfs pull
+```
 
 ## KDO CO DĚLAL
 
