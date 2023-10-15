@@ -24,32 +24,20 @@ def show_page(page_name):
 
 def process_and_open_page():
     # run inference on neural net
+    npimg = ld.resizing(selected_img)
+    print(npimg.shape)
     match combobox.get():
         case "CNN":
-            npimg = ld.resizing(selected_img)
-            print(npimg.shape)
             out = inference.infer_CNN(npimg)
-            answerLablou.configure(text=out)
-            show_page("page2")
         case "KNNh":
-            npimg = ld.resizing(selected_img)
-            print(npimg.shape)
             out = inference.infer_KNN_hist(npimg)
-            answerLablou.configure(text=out)
-            show_page("page2")
         case "KNNr":
-            npimg = ld.resizing(selected_img)
-            print(npimg.shape)
             out = inference.infer_KNN_raw(npimg)
-            answerLablou.configure(text=out)
-            show_page("page2")
         case "SVM":
-            npimg = ld.resizing(selected_img)
-            print(npimg.shape)
             out = inference.infer_SVM(npimg)
-            answerLablou.configure(text=out)
-            show_page("page2")
-        
+    answerLablou.configure(text=out)
+    show_page("page2")
+    
 
 
 root = ctk.CTk()
