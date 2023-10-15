@@ -67,7 +67,7 @@ def infer_KNN_raw(X):
         return "tvárný lom"
 
 def infer_CNN(X):
-    model = keras.models.load_model('src/model/saved/NeuralNet/cnn.keras')
+    model = keras.models.load_model('src/model/saved/CNN/cnn.keras')
 
     X = tf.expand_dims(X/255, axis=-1)
     X = tf.expand_dims(X, axis=0)
