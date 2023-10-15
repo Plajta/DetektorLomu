@@ -67,14 +67,17 @@ def infer_KNN_raw(X):
         return "tvárný lom"
 
 def infer_CNN(X):
-    model = keras.models.load_model('src/model/saved/NeuralNet/cnn_best.keras')
+    model = keras.models.load_model('src/model/saved/NeuralNet/cnn.keras')
 
     X = tf.expand_dims(X/255, axis=-1)
     X = tf.expand_dims(X, axis=0)
 
     y_hat = round(model.predict(X)[0][0])
     print(y_hat)
-    return round(y_hat)
+    if y_hat == 0:
+        return "štěpný lom"
+    elif y_hat == 1:
+        return "tvárný lom"
 
 # loader = Loader("dataset/lomy/stepnylom_jpg","dataset/lomy/tvarnylom_jpg")
 # loader.generate_dataset(400)
