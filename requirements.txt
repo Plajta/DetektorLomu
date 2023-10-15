@@ -7,3 +7,4 @@ Pillow==10.0.1
 scikit-image==0.22.0
 scipy==1.11.3
 tensorflow==2.14.0
+customtkinter==5.2.0
