@@ -104,7 +104,7 @@ answerLablou = ctk.CTkLabel(frames['page2'], text = "Ktery lom to je", font=("Ar
 # Main frame
 
 emtrylabel = ctk.CTkLabel(frames["main_page"], text='')
-emtrylabel.pack(pady=85)
+emtrylabel.pack(pady=65)
 ButtonFont = ctk.CTkFont(family='Arial')
 open_button = ctk.CTkButton(
     frames["main_page"],
