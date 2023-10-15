@@ -82,7 +82,7 @@ def select_file():
 
     filename = fd.askopenfilename(
         title='Open an image file',
-        initialdir='~',
+        initialdir='$PWD',
         filetypes=filetypes)
     
     if filename:
