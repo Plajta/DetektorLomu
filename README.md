@@ -3,19 +3,24 @@ Binární klasifikace lomů (štěpný x tvárný)
 
 | Model       | Accuracy    |
 | ----------- | ----------- |
-| SVM (SVC)   | 79.8%      |
+| SVM (SVC)   | 79.8%       |
 | CNN         | 85%         |
 | KNN hist    | 82%         |
 | KNN raw     | 74%         |
 
-Použité balíčky: 
-    Aplikace:
-        1. `tkinter`
-        
-    Modely:
-        1. `torch`
+### Instalace:
+1. Repozitář obsahuje velké soubory spravované `git lfs`
 
-## KDO CO DELAT
+	```
+	git lfs install
+	```
+2. Nainstalovat requirements (doporučeno do venv nebo Conda enviromentu)
+
+	```
+	pip install -r requirements.txt
+	```
+
+## KDO CO DĚLAL
 
 Andrii - Appka
 
@@ -29,13 +34,11 @@ Link: https://drive.google.com/file/d/1k1I_AF1FbsyWtccinHeDZ2C5mzqOiktP/view?usp
 
 ## TODO:
 
-- [x] choose theme
-- [x] dataset preprocessing
-- [x] dataset processing fix
-- [ ] model
-- [ ] Data augmentation
-- [ ] Early stopping?
-- [ ] Grafy
+- [x] Dataset preprocessing
+- [x] Model
+- [x] Data augmentation (moc to nezlepšovalo)
+- [x] Early stopping? (potřebuje potunit)
+- [x] Grafy
 - [x] App na PC
 - [x] Inference na apku
-- [ ] Ensemble CNN
+- [x] Ensemble CNN (blbne)
