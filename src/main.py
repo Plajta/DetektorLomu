@@ -111,9 +111,9 @@ open_button.pack(padx=130, pady=10)
 
 def method_box_callback(choice):
     picked_method = choice
-    print(models[choice])
-    model_box.configure(values=models[choice])
-    model_box.set(models[choice][0])
+    values=[model_path.split("/")[-1] for model_path in models[choice]]
+    model_box.configure(values=values)
+    model_box.set(values[0])
 
 def model_box_callback(choice):
     print("model box dropdown clicked:", choice)
@@ -122,14 +122,10 @@ method_box = ctk.CTkComboBox(master=frames['main_page'],
                                      values=list(models),
                                      command=method_box_callback)
 method_box.pack(side="top")
-method_box.set(list(models)[0]) 
+method_box.set(list(models)[0])
 
-model_box = ctk.CTkComboBox(master=frames['main_page'],
-                                     values=models[list(models)[0]],
-                                     command=model_box_callback)
+model_box = ctk.CTkComboBox(master=frames['main_page'], command=model_box_callback)
 model_box.pack(side="top", pady=10)
-model_box.set(models[list(models)[0]][0])
-
 
 method_box_callback(list(models)[0])
 model_box_callback(models[list(models)[0]][0])
