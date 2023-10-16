@@ -83,19 +83,8 @@ def infer_CNN(X, model_path):
     # convert image to the model input
     X = tf.expand_dims(X/255, axis=-1)
     X = tf.expand_dims(X, axis=0)
-    
+
     # run the model
     y_hat = round(model.predict(X)[0][0])
 
     return y_hat
-
-# loader = Loader("dataset/lomy/stepnylom_jpg","dataset/lomy/tvarnylom_jpg")
-# loader.generate_dataset(400)
-# chyby = 0
-# for i in range (100):
-#     imag,label = loader.get(i,2)
-#     print(label)
-#     y_hat = infer_CNN(imag)
-#     cv2.imwrite(f'test/{i}_{label}_{y_hat}.jpg',imag)
-#     if label!=y_hat: chyby+=1
-# print(chyby)

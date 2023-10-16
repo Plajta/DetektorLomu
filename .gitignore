@@ -1,18 +1,20 @@
 #dataset
-/dataset/*
-!/dataset/.gitkeep
+dataset/*
+!dataset/.gitkeep
 
 #models
-/src/model/saved/*
-!/src/model/saved/.gitkeep
-!/src/model/saved/SVM
-!/src/model/saved/KNN
-!/src/model/saved/CNN
+src/model/saved/*
+!src/model/saved/.gitkeep
+!src/model/saved/SVM
+!src/model/saved/KNN
+!src/model/saved/CNN
 src/model/saved/CNN/checkpoints/
 
 env
 .idea
 
-/src/model/__pycache__/
-/wandb/
+src/model/__pycache__/
+wandb/
 test/
+
+benchmark

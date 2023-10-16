@@ -118,7 +118,6 @@ if __name__ == "__main__":
     ld = Loader("dataset/lomy/stepnylom_jpg","dataset/lomy/tvarnylom_jpg")
     print(ld.get(6))
     ld.generate_dataset(400)
-    print("zmrd")
     print(ld.get_length(0))
     print(ld.get_length(1))
     print(ld.get_length(2))
