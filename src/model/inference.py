@@ -24,9 +24,22 @@ def extract_color_histogram(image, bins=(8, 8, 8)):
     cv2.normalize(hist, hist)
     return hist.flatten()
 
-def infer_SVM(X):
+def infer(X, method, model):
+    print(method,model)
+    match method:
+        case "CNN":
+            out = infer_CNN(X, model)
+        case "KNNh":
+            out = infer_KNN_hist(X, model)
+        case "KNNr":
+            out = infer_KNN_raw(X, model)
+        case "SVM":
+            out = infer_SVM(X, model)
+    return out
+
+def infer_SVM(X, model_path):
     # load model
-    model = pickle.load(open("src/model/saved/SVM/SVC.pickle", "rb"))
+    model = pickle.load(open(model_path, "rb"))
 
     X = resize(X, (150, 150, 1))
     X = X / 255
@@ -41,9 +54,9 @@ def infer_SVM(X):
     elif y_hat == 1:
         return "tvárný lom"
     
-def infer_KNN_hist(X):
+def infer_KNN_hist(X, model_path):
     # load model
-    model = pickle.load(open("src/model/saved/KNN/KNNh.pickle", "rb"))
+    model = pickle.load(open(model_path, "rb"))
 
     X = extract_color_histogram(X)
     #X = X.reshape(-1, 1)
@@ -54,9 +67,9 @@ def infer_KNN_hist(X):
     elif y_hat == 1:
         return "tvárný lom"
 
-def infer_KNN_raw(X):
+def infer_KNN_raw(X, model_path):
     # load model
-    model = pickle.load(open("src/model/saved/KNN/KNNr.pickle", "rb"))
+    model = pickle.load(open(model_path, "rb"))
 
     X = image_to_feature_vector(X)
     y_hat = model.predict([X])[0]
@@ -66,8 +79,8 @@ def infer_KNN_raw(X):
     elif y_hat == 1:
         return "tvárný lom"
 
-def infer_CNN(X):
-    model = keras.models.load_model('src/model/saved/CNN/cnn.keras')
+def infer_CNN(X, model_path):
+    model = keras.models.load_model(model_path)
 
     X = tf.expand_dims(X/255, axis=-1)
     X = tf.expand_dims(X, axis=0)

@@ -23,28 +23,18 @@ def show_page(page_name):
         frame.grid_remove()
     frames[page_name].grid(row=0, column=0, padx=10, pady=10)
 
-
+with open('models.yaml') as file:
+    models = yaml.load(file,Loader=yaml.Loader)
+    if len(models) == 0:
+        quit()
 
 def process_and_open_page():
     # run inference on neural net
     npimg = ld.resizing(selected_img)
-    print(npimg.shape)
-    match method_box.get():
-        case "CNN":
-            out = inference.infer_CNN(npimg)
-        case "KNNh":
-            out = inference.infer_KNN_hist(npimg)
-        case "KNNr":
-            out = inference.infer_KNN_raw(npimg)
-        case "SVM":
-            out = inference.infer_SVM(npimg)
+    method_picked = method_box.get()
+    out = inference.infer(npimg,method_picked, [model_path for model_path in models[method_picked] if model_box.get() in model_path][0]) # This is weird but it works
     answerLablou.configure(text=out)
     show_page("page2")
-    
-with open('models.yaml') as file:
-    models = yaml.load(file,Loader=yaml.Loader)
-    if len(models) is 0:
-        quit()
     
 
 root = ctk.CTk()
@@ -110,7 +100,6 @@ open_button = ctk.CTkButton(
 open_button.pack(padx=130, pady=10)
 
 def method_box_callback(choice):
-    picked_method = choice
     values=[model_path.split("/")[-1] for model_path in models[choice]]
     model_box.configure(values=values)
     model_box.set(values[0])
