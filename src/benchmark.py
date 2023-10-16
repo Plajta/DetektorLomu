@@ -1,6 +1,8 @@
 import sys, getopt, os, random, shutil
+from cv2 import imread
 
 DEFAULT_DIRECTORIES = ["dataset/lomy/stepnylom_jpg","dataset/lomy/tvarnylom_jpg"]
+BENCHMARK_PATH = "benchmark"
 
 def print_help():
     print("CVUTHack Benchmark by Plajta <3")
@@ -14,14 +16,13 @@ def print_help():
     print("\thelp\t\t\tPrints this text")
 
 def regenerate_benchmark_dataset(img_num,*paths):
-    benchmark_path = "benchmark"
     # If the benchmark directory doesn't exist make it, otherwise empty it
-    if os.path.exists(benchmark_path): shutil.rmtree(benchmark_path)
-    os.mkdir(benchmark_path)
+    if os.path.exists(BENCHMARK_PATH): shutil.rmtree(BENCHMARK_PATH)
+    os.mkdir(BENCHMARK_PATH)
     
     for i,path in enumerate(paths):
         if os.path.isdir(path):
-            new_path = os.path.join(benchmark_path,str(i))
+            new_path = os.path.join(BENCHMARK_PATH,str(i))
             os.mkdir(new_path)
             list_of_files = [name for name in os.listdir(path) if os.path.isfile(os.path.join(path,name))]
             if len(list_of_files) >= img_num:
@@ -31,9 +32,17 @@ def regenerate_benchmark_dataset(img_num,*paths):
             print(f"{path} is not a directory!")
 
 def start_test():
-    # from model.processing import Loader
-    print(os.listdir("benchmark"))
-    # loader = Loader()
+    from model.processing import Loader
+    from model.inference import infer_CNN
+    loader = Loader()
+    errors = 0
+    for root, dirs, files in os.walk(BENCHMARK_PATH):
+        for name in files:
+            resized_img = loader.resizing(imread(os.path.join(root,name)))
+            result = infer_CNN(resized_img, "src/model/saved/CNN/cnn_best.keras") # TODO Make it configurable
+            if result != int(root[-1]):
+                errors += 1
+    print(f"Number of errors: {errors}")
 
 def main(args):
     if not len(args):
