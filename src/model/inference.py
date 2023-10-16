@@ -41,56 +41,53 @@ def infer_SVM(X, model_path):
     # load model
     model = pickle.load(open(model_path, "rb"))
 
+    # convert image to the model input
     X = resize(X, (150, 150, 1))
     X = X / 255
     X = X.flatten()
     X = X.reshape(1, -1)
 
-    # you can use loaded model to compute predictions
+    # run the model
     y_hat = model.predict(X)[0]
 
-    if y_hat == 0:
-        return "štěpný lom"
-    elif y_hat == 1:
-        return "tvárný lom"
+    return y_hat
     
 def infer_KNN_hist(X, model_path):
     # load model
     model = pickle.load(open(model_path, "rb"))
 
+    # convert image to the model input
     X = extract_color_histogram(X)
-    #X = X.reshape(-1, 1)
+
+    # run the model
     y_hat = model.predict([X])[0]
 
-    if y_hat == 0:
-        return "štěpný lom"
-    elif y_hat == 1:
-        return "tvárný lom"
+    return y_hat
 
 def infer_KNN_raw(X, model_path):
     # load model
     model = pickle.load(open(model_path, "rb"))
 
+    # convert image to the model input
     X = image_to_feature_vector(X)
+
+    # run the model
     y_hat = model.predict([X])[0]
 
-    if y_hat == 0:
-        return "štěpný lom"
-    elif y_hat == 1:
-        return "tvárný lom"
+    return y_hat
 
 def infer_CNN(X, model_path):
+    # load model
     model = keras.models.load_model(model_path)
 
+    # convert image to the model input
     X = tf.expand_dims(X/255, axis=-1)
     X = tf.expand_dims(X, axis=0)
-
+    
+    # run the model
     y_hat = round(model.predict(X)[0][0])
-    print(y_hat)
-    if y_hat == 0:
-        return "štěpný lom"
-    elif y_hat == 1:
-        return "tvárný lom"
+
+    return y_hat
 
 # loader = Loader("dataset/lomy/stepnylom_jpg","dataset/lomy/tvarnylom_jpg")
 # loader.generate_dataset(400)

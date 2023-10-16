@@ -32,8 +32,8 @@ def process_and_open_page():
     # run inference on neural net
     npimg = ld.resizing(selected_img)
     method_picked = method_box.get()
-    out = inference.infer(npimg,method_picked, [model_path for model_path in models[method_picked] if model_box.get() in model_path][0]) # This is weird but it works
-    answerLablou.configure(text=out)
+    decision = inference.infer(npimg,method_picked, [model_path for model_path in models[method_picked] if model_box.get() in model_path][0]) # This is weird but it works
+    answerLablou.configure(text="tvárný lom" if decision else "štěpný lom")
     show_page("page2")
     
 
