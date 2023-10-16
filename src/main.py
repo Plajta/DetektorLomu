@@ -3,6 +3,7 @@ from PIL import Image, ImageTk
 import customtkinter as ctk
 from model.processing import Loader
 import os
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2' 
 import numpy as np
 import cv2
 from model import inference

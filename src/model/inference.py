@@ -76,7 +76,7 @@ def infer_KNN_raw(X, model_path):
 
     return y_hat
 
-def infer_CNN(X, model_path):
+def infer_CNN(X, model_path):  # TODO make a batch inference command
     # load model
     model = keras.models.load_model(model_path)
 

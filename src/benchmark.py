@@ -1,4 +1,5 @@
 import sys, getopt, os, random, shutil
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2' 
 from cv2 import imread
 
 DEFAULT_DIRECTORIES = ["dataset/lomy/stepnylom_jpg","dataset/lomy/tvarnylom_jpg"]
