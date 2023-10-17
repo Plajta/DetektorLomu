@@ -43,7 +43,7 @@ def start_test():
         for name in files:
             resized_imgs.append(loader.resizing(imread(os.path.join(root,name))))
             truth.append(int(root[-1]))
-        results = infer_CNN(resized_imgs, "src/model/saved/CNN/checkpoints/cnn-checkpoint-07-0.97.keras") # TODO Make it configurable
+        results = infer_CNN(resized_imgs, "src/model/saved/CNN/cnn.keras") # TODO Make it configurable
         for i, result in enumerate(results):
             print(f"Truth: {truth[i]}, Prediction: {result}")
             if result != truth[i]: errors += 1
