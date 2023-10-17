@@ -2,12 +2,16 @@ import tensorflow as tf
 from tensorflow import keras
 from processing import Loader
 from keras.utils import plot_model
+import os
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3' 
+os.environ['ROCM_PATH'] = '/opt/rocm' 
 #import matplotlib.pyplot as plt
 #import matplotlib
 #matplotlib.use("TkAgg")
 
 BATCH_SIZE = 8
 EPOCHS = 20
+EARLY_STOPPING = True # Set to False to disable early stopping
 
 print("Loading....")        
 loader = Loader("dataset/lomy/stepnylom_jpg","dataset/lomy/tvarnylom_jpg")
@@ -33,9 +37,9 @@ train_dataset = train_dataset.shuffle(69).batch(BATCH_SIZE)
 test_dataset = test_dataset.shuffle(69).batch(BATCH_SIZE)
 
 #Tensorflow callbacks
-filepath = "src/model/saved/NeuralNet/checkpoints/cnn-checkpoint-{epoch:02d}-{val_accuracy:.2f}.keras"
+filepath = "src/model/saved/CNN/checkpoints/cnn-checkpoint-{epoch:02d}-{val_accuracy:.2f}.keras"
 checkpoint_save = tf.keras.callbacks.ModelCheckpoint(filepath, save_weights_only=False, verbose=1, mode='auto', period=1)
-early_stopping = tf.keras.callbacks.EarlyStopping(monitor='val_loss', patience=3)
+if EARLY_STOPPING: early_stopping = tf.keras.callbacks.EarlyStopping(monitor='val_loss', patience=3)
 
 model = keras.models.Sequential()
 model.add(keras.layers.Input(batch_size=BATCH_SIZE,shape=(480,640,1)))
@@ -66,11 +70,13 @@ model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy']
 
 model.summary()
 
+callback_list = [checkpoint_save,early_stopping] if EARLY_STOPPING else [checkpoint_save]
+
 history = model.fit(train_dataset, epochs=EPOCHS, use_multiprocessing=False, validation_data=test_dataset,
-                    callbacks=[checkpoint_save,early_stopping])
+                    callbacks=callback_list)
 model.evaluate(test_dataset)
 
-model.save("src/model/saved/NeuralNet/cnn.keras")
+model.save("src/model/saved/CNN/cnn.keras")
 # plot_model(model, to_file='model_plot.png', show_shapes=True, show_layer_names=True)
 
 print("model saved!")
