@@ -1,10 +1,10 @@
+import os
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2' 
+os.environ['ROCM_PATH'] = '/opt/rocm' 
 import tensorflow as tf
 from tensorflow import keras
 from processing import Loader
 from keras.utils import plot_model
-import os
-os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3' 
-os.environ['ROCM_PATH'] = '/opt/rocm' 
 #import matplotlib.pyplot as plt
 #import matplotlib
 #matplotlib.use("TkAgg")
@@ -37,7 +37,7 @@ train_dataset = train_dataset.shuffle(69).batch(BATCH_SIZE)
 test_dataset = test_dataset.shuffle(69).batch(BATCH_SIZE)
 
 #Tensorflow callbacks
-filepath = "src/model/saved/CNN/checkpoints/cnn-checkpoint-{epoch:02d}-{val_accuracy:.2f}.keras"
+filepath = "src/model/saved/CNN/checkpoints/cnn-checkpoint-{epoch:02d}-acc{val_accuracy:.2f}-loss{val_loss:.2f}.keras"
 checkpoint_save = tf.keras.callbacks.ModelCheckpoint(filepath, save_weights_only=False, verbose=1, mode='auto', period=1)
 if EARLY_STOPPING: early_stopping = tf.keras.callbacks.EarlyStopping(monitor='val_loss', patience=3)
 
