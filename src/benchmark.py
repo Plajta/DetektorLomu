@@ -38,11 +38,15 @@ def start_test():
     loader = Loader()
     errors = 0
     for root, dirs, files in os.walk(BENCHMARK_PATH):
+        resized_imgs = []
+        truth = []
         for name in files:
-            resized_img = loader.resizing(imread(os.path.join(root,name)))
-            result = infer_CNN(resized_img, "src/model/saved/CNN/cnn_best.keras") # TODO Make it configurable
-            if result != int(root[-1]):
-                errors += 1
+            resized_imgs.append(loader.resizing(imread(os.path.join(root,name))))
+            truth.append(int(root[-1]))
+        results = infer_CNN(resized_imgs, "src/model/saved/CNN/checkpoints/cnn-checkpoint-07-0.97.keras") # TODO Make it configurable
+        for i, result in enumerate(results):
+            print(f"Truth: {truth[i]}, Prediction: {result}")
+            if result != truth[i]: errors += 1
     print(f"Number of errors: {errors}")
 
 def main(args):

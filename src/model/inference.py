@@ -24,67 +24,80 @@ def extract_color_histogram(image, bins=(8, 8, 8)):
     cv2.normalize(hist, hist)
     return hist.flatten()
 
-def infer(X, method, model):
-    print(method,model)
+def infer(data, method, model):
+    # Make data a list so it still works with passing only one image
+    if type(data) is not list: data = [data]
     match method:
         case "CNN":
-            out = infer_CNN(X, model)
+            out = infer_CNN(data, model)
         case "KNNh":
-            out = infer_KNN_hist(X, model)
+            out = infer_KNN_hist(data, model)
         case "KNNr":
-            out = infer_KNN_raw(X, model)
+            out = infer_KNN_raw(data, model)
         case "SVM":
-            out = infer_SVM(X, model)
+            out = infer_SVM(data, model)
     return out
 
-def infer_SVM(X, model_path):
+def infer_SVM(data, model_path):
     # load model
     model = pickle.load(open(model_path, "rb"))
 
-    # convert image to the model input
-    X = resize(X, (150, 150, 1))
-    X = X / 255
-    X = X.flatten()
-    X = X.reshape(1, -1)
+    y_hat = []
 
-    # run the model
-    y_hat = model.predict(X)[0]
+    for X in data:
+        # convert image to the model input
+        X = resize(X, (150, 150, 1))
+        X = X / 255
+        X = X.flatten()
+        X = X.reshape(1, -1)
+
+        # run the model
+        y_hat.append(model.predict(X)[0])
 
     return y_hat
     
-def infer_KNN_hist(X, model_path):
+def infer_KNN_hist(data, model_path):
     # load model
     model = pickle.load(open(model_path, "rb"))
 
-    # convert image to the model input
-    X = extract_color_histogram(X)
+    y_hat = []
 
-    # run the model
-    y_hat = model.predict([X])[0]
+    for X in data:
+        # convert image to the model input
+        X = extract_color_histogram(X)
+
+        # run the model
+        y_hat.append(model.predict([X])[0])
 
     return y_hat
 
-def infer_KNN_raw(X, model_path):
+def infer_KNN_raw(data, model_path):
     # load model
     model = pickle.load(open(model_path, "rb"))
+    
+    y_hat = []
 
-    # convert image to the model input
-    X = image_to_feature_vector(X)
+    for X in data:
+        # convert image to the model input
+        X = image_to_feature_vector(X)
 
-    # run the model
-    y_hat = model.predict([X])[0]
+        # run the model
+        y_hat.append(model.predict([X])[0])
 
     return y_hat
 
-def infer_CNN(X, model_path):  # TODO make a batch inference command
+def infer_CNN(data, model_path):  # TODO make a batch inference command
     # load model
     model = keras.models.load_model(model_path)
 
-    # convert image to the model input
-    X = tf.expand_dims(X/255, axis=-1)
-    X = tf.expand_dims(X, axis=0)
+    y_hat = []
 
-    # run the model
-    y_hat = round(model.predict(X)[0][0])
+    for X in data:
+        # convert image to the model input
+        X = tf.expand_dims(X/255, axis=-1)
+        X = tf.expand_dims(X, axis=0)
+
+        # run the model
+        y_hat.append(round(model.predict(X)[0][0]))
 
     return y_hat
