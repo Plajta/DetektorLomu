@@ -1,0 +1,9 @@
+CNN:
+- src/model/saved/CNN/cnn.keras
+- src/model/saved/CNN/cnn_best.keras
+KNNh:
+- src/model/saved/KNN/KNNh.pickle
+KNNr:
+- src/model/saved/KNN/KNNr.pickle
+SVM:
+- src/model/saved/SVM/SVC.pickle
