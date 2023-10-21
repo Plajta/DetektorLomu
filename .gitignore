@@ -16,5 +16,5 @@ env
 src/model/__pycache__/
 wandb/
 test/
-
+lomy
 benchmark
