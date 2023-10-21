@@ -18,3 +18,4 @@ wandb/
 test/
 lomy
 benchmark
+src/static/images

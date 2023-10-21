@@ -1,13 +1,90 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <link rel="stylesheet" type="text/css" href="../static/css/style.css"
     <title>Image Viewer</title>
 </head>
 <body>
-    <h1>Choose an Image</h1>
+    {% if ansver %}
+        <h1>{{ansver}}</h1>
+    {% endif %}
+    {% if image %}
+    <img src="{{image}}" alt="">
+    {% else %}
+    <h1 id="CIText">Choose an Image</h1>
+    {% endif %}
+
+    {% if error %}
+        <h1 id="error_h1">{{error}}</h1>
+    {% endif %}
+
+    <img id="image" style="max-width: 100%;">
+    {% if not ansver %}
     <form method="POST" enctype="multipart/form-data">
-        <input type="file" name="user_image">
-        <input type="submit" value="Upload">
+        <input type="file" name="user_image" id="fileInput">
+        <select name="model" id="first_select">
+            <option value="{{models[0]}}" selected>{{models[0]}}</option>
+            {% for model in models[1:] %}
+            <option value="{{model}}">{{model}}</option>"
+            {% endfor %}
+        </select>
+        <select name="model_path" id="second_select" >
+            <option value="{{models_path[models[0]][0][1]}}" selected>{{models_path[models[0]][0][0]}}</option>
+            {% for model_path in models_path[models[0]][1:] %}
+            <option value="{{model_path[1]}}">{{model_path[0]}}</option>"
+            {% endfor %}
+        </select>
+        
+        <input type="submit" value="Process">
     </form>
+    {% endif %}
+    {% if ansver %}
+    <form action="/">
+        <input type="submit" value="Back" />
+    </form>
+    {% endif %}
+    <script>
+        var models_path = {{ models_path|tojson }};
+        console.log(models_path);
+        // Додайте JavaScript для оновлення другого вибору залежно від першого
+        document.getElementById('first_select').addEventListener('change', function() {
+            // Отримайте вибір з першого селекта
+            var firstValue = this.value;
+            
+            var secondSelect = document.getElementById('second_select');
+            secondSelect.innerHTML = '';
+
+            for (const model_path in models_path){
+                if (model_path === firstValue) {
+                    console.log(model_path);
+                    for (option in models_path[model_path]){
+                        var option1 = document.createElement('option');
+                        option1.value = models_path[model_path][option][1];
+                        option1.text = models_path[model_path][option][0];
+                        secondSelect.appendChild(option1);
+                    }
+                }
+            }
+        });
+        const fileInput = document.getElementById('fileInput');
+        const image = document.getElementById('image');
+        const error_text = document.getElementById('error_h1');
+        const image_text = document.getElementById('CIText')
+
+        fileInput.addEventListener('change', function () {
+            const selectedFile = fileInput.files[0];
+
+            if (selectedFile) {
+                const objectURL = URL.createObjectURL(selectedFile);
+                image.src = objectURL;
+                if (error_text) {
+                    error_text.remove();
+                }
+                if (image_text){
+                    image_text.remove()
+                }
+            }
+        });
+    </script>
 </body>
 </html>
