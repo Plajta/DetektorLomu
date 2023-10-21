@@ -1,6 +1,7 @@
 CNN:
 - src/model/saved/CNN/cnn.keras
 - src/model/saved/CNN/cnn_best.keras
+- src/model/saved/CNN/cnn_vaskovo_.keras
 KNNh:
 - src/model/saved/KNN/KNNh.pickle
 KNNr:

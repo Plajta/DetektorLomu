@@ -79,11 +79,11 @@ def select_file():
         label.image = img
         label2.configure(image=img)
         label2.image = img
-
+        open_button.configure(text='Otevřít nový obrázek\n('+os.path.basename(filename)+")")
         global selected_img
         selected_img = cv2.imread(filename)
 
-        show_page("page1")
+        next_button.configure(state='normal')
 
 
 answerLablou = ctk.CTkLabel(frames['page2'], text = "Ktery lom to je", font=("Arial", 25),  padx=20)
