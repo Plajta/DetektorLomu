@@ -66,11 +66,11 @@ def upload_file():
                 f.save(session["img_path"])
                 return render_template('index.html', models=models, models_path=models_path, ansver=Process_Anal(session["img_path"],request.form['model'],request.form['model_path']), image="static/images/" + image_uuid + ".jpg")
                 
-            else:
-                return render_template('index.html', models=models, models_path=models_path, error="No File Selected")
-        
         except Exception as e:
-            return "An error occurred: " + str(e)
+            if str(e) == "Layer 'conv2d_1' expected 2 variables, but received 0 variables during loading. Expected: ['conv2d_1/kernel:0', 'conv2d_1/bias:0']":
+                return render_template('error.html', error="Error with model! Please choose another model")
+            else:
+                return render_template('error.html', error=str(e))
 
 
     # GET Method    
@@ -79,7 +79,9 @@ def upload_file():
         last_file = False
     return render_template('index.html', models=models, models_path=models_path, error=False)
 
-
+@app.errorhandler(404)
+def not_found(error):
+    return render_template('error.html', error=error)
 
 if __name__ == '__main__':
     app.run(debug=True)

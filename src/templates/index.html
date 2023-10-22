@@ -5,45 +5,48 @@
     <title>Image Viewer</title>
 </head>
 <body>
-    {% if ansver %}
-        <h1>{{ansver}}</h1>
-    {% endif %}
-    {% if image %}
-    <img src="{{image}}" alt="">
-    {% else %}
-    <h1 id="CIText">Choose an Image</h1>
-    {% endif %}
-
-    {% if error %}
-        <h1 id="error_h1">{{error}}</h1>
-    {% endif %}
-
-    <img id="image" style="max-width: 100%;">
     {% if not ansver %}
-    <form method="POST" enctype="multipart/form-data">
-        <input type="file" name="user_image" id="fileInput">
-        <select name="model" id="first_select">
-            <option value="{{models[0]}}" selected>{{models[0]}}</option>
-            {% for model in models[1:] %}
-            <option value="{{model}}">{{model}}</option>"
-            {% endfor %}
-        </select>
-        <select name="model_path" id="second_select" >
-            <option value="{{models_path[models[0]][0][1]}}" selected>{{models_path[models[0]][0][0]}}</option>
-            {% for model_path in models_path[models[0]][1:] %}
-            <option value="{{model_path[1]}}">{{model_path[0]}}</option>"
-            {% endfor %}
-        </select>
-        
-        <input type="submit" value="Process">
-    </form>
-    {% endif %}
-    {% if ansver %}
-    <form action="/">
-        <input type="submit" value="Back" />
-    </form>
+    <div class="main">    
+        <h1 id="CIText">Choose an Image</h1>
+        <div class="imgcount">
+            <img id="image">
+        </div>
+        <form method="POST" enctype="multipart/form-data" class="formstyle">
+            <input type="file" name="user_image" id="fileInput">
+            <label for="fileInput" class="button">
+                Choose File
+            </label>
+
+            <select name="model" id="first_select" class="select">
+                <option value="{{models[0]}}" selected>{{models[0]}}</option>
+                {% for model in models[1:] %}
+                <option value="{{model}}">{{model}}</option>"
+                {% endfor %}
+            </select>
+            <select name="model_path" id="second_select" class="select">
+                <option value="{{models_path[models[0]][0][1]}}" selected>{{models_path[models[0]][0][0]}}</option>
+                {% for model_path in models_path[models[0]][1:] %}
+                <option value="{{model_path[1]}}">{{model_path[0]}}</option>"
+                {% endfor %}
+            </select>
+            
+            <input type="submit" value="Process" class="action_button" id="button_process">
+        </form>
+    </div>
+    {% else %}
+    <div class="main">
+        <div class="imgcont">
+            <img src="{{image}}" alt="" style="max-height: 600px;">
+        </div>
+        <form action="/" class="formstyle">
+            <input type="submit" value="Back" class="button"/>
+            <h1 style="margin: 0 auto;">{{ansver}}</h1>
+        </form>
+    </div>
     {% endif %}
     <script>
+        const button_process = document.getElementById('button_process');
+        button_process.disabled = true;
         var models_path = {{ models_path|tojson }};
         console.log(models_path);
         // Додайте JavaScript для оновлення другого вибору залежно від першого
@@ -77,6 +80,7 @@
             if (selectedFile) {
                 const objectURL = URL.createObjectURL(selectedFile);
                 image.src = objectURL;
+                button_process.disabled = false;
                 if (error_text) {
                     error_text.remove();
                 }
